@@ -13,7 +13,7 @@ public class JwtService {
     private static final String SECRET_KEY = "groupf4";
     private static final long EXPIRE_TIME = 604800000L;
     Date now = new Date();
-    Date expiryDate = new Date(now.getTiingme() + EXPIRE_TIME);
+    Date expiryDate = new Date(now.getTime() + EXPIRE_TIME);
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class.getName());
 
     public String generateTokenLogin(String userName) {

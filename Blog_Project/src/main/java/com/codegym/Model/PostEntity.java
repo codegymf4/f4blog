@@ -11,7 +11,10 @@ public class PostEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
+
+
+
     @Column(name = "title")
     private String title;
     @Column(name = "publishedStatus")
@@ -31,12 +34,12 @@ public class PostEntity {
     private UserEntity userByUserId;
     @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(name = "post_category",joinColumns = @JoinColumn(name = "postId"),inverseJoinColumns = @JoinColumn(name="categoryId"))
-    private List<CategoryEntity> categoryEntityList;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<CategoryEntity> categoryEntityList;
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "post_tag",joinColumns = @JoinColumn(name = "postId"),inverseJoinColumns = @JoinColumn(name="tagId"))
     private List<TagEntity> tagEntityList;
-    @OneToMany(mappedBy = "postByPostId")
-    private List<PostLikeEntity> postLikesById;
+    @OneToMany(mappedBy = "postByPostId",fetch = FetchType.EAGER)
+    private Set<PostLikeEntity> postLikesById;
 
     public List<TagEntity> getTagEntityList() {
         return tagEntityList;
@@ -46,11 +49,11 @@ public class PostEntity {
         this.tagEntityList = tagEntityList;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -119,11 +122,18 @@ public class PostEntity {
         this.userByUserId = userByUserId;
     }
 
-    public List<CategoryEntity> getCategoryEntityList() {
+    public Set<CategoryEntity> getCategoryEntityList() {
         return categoryEntityList;
     }
 
-    public void setCategoryEntityList(List<CategoryEntity> categoryEntityList) {
+    public void setCategoryEntityList(Set<CategoryEntity> categoryEntityList) {
         this.categoryEntityList = categoryEntityList;
+    }
+    public Set<PostLikeEntity> getPostLikesById() {
+        return postLikesById;
+    }
+
+    public void setPostLikesById(Set<PostLikeEntity> postLikesById) {
+        this.postLikesById = postLikesById;
     }
 }
