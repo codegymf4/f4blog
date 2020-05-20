@@ -74,6 +74,15 @@ export class UserService {
               console.log(error);
             });
   }
+  createUserCatch(s: string): string {
+    if (s=="403"){
+      return "wrong password or username";}
+    if (s=="404"){
+      return "dont have this acction link";}else {
+      return "down serve backend";
+    }
+
+  }
 
   getCurrentUserValue(): UserJwt {
     return this.user.value

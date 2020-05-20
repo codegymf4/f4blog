@@ -50,7 +50,8 @@ public class AdminController {
             System.out.println(userEntity.getUserName() + " " + userEntity.getEmail());
             userEntity.setRegisteredAt(new Timestamp(new Date().getTime()));
             this.userService.save(userEntity);
-            return ResponseEntity.ok("them thanh cong");
+        System.out.println("thanh cong");
+            return ResponseEntity.ok(userEntity);
     }
 
     @PutMapping(value = "/edituser", produces = MediaType.APPLICATION_JSON_VALUE)
