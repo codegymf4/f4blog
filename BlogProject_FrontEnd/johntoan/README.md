@@ -155,8 +155,8 @@ paper-kit-2-angular
 │   │   └── signup
 │   │       ├── signup.component.html
 │   │       ├── signup.component.scss
-│   │       ├── signup.component.spec.ts
-│   │       └── signup.component.ts
+│   │       ├── signin.component.spec.ts
+│   │       └── signin.component.ts
 │   ├── assets
 │   │   ├── css
 │   │   ├── fonts

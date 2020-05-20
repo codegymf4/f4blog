@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
         if (titlee.charAt(0) === '#') {
             titlee = titlee.slice(1);
         }
-        if (titlee === '/home' || titlee === '/showblog' || titlee === '/signup' || titlee === '/register' || titlee === '/aboutme') {
+        if (titlee === '/home' || titlee === '/showblog' || titlee === '/signin' || titlee === '/register' || titlee === '/aboutme') {
             return false;
         } else {
             return true;
