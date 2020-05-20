@@ -1,8 +1,12 @@
 package com.codegym.WebAppConfig;
 
 import com.codegym.Repository.IUserRepoHQL;
+import com.codegym.Repository.PostRepository;
+import com.codegym.Repository.impl.PostRepositoryImpl;
 import com.codegym.Repository.impl.UserRepo;
 import com.codegym.Service.IUserService;
+import com.codegym.Service.PostService;
+import com.codegym.Service.impl.PostServiceImpl;
 import com.codegym.Service.impl.UserService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +72,16 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
 
     @Autowired
     Environment environment;
+
+    @Bean
+    public PostRepository postRepository(){
+        return new PostRepositoryImpl();
+    }
+
+    @Bean
+    public PostService postService(){
+        return new PostServiceImpl();
+    }
 
     @Bean
     public IUserRepoHQL userRepo() {

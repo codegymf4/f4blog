@@ -2,8 +2,6 @@ package com.codegym.Model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,7 +10,10 @@ public class PostEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
+
+
+
     @Column(name = "title")
     private String title;
     @Column(name = "publishedStatus")
@@ -33,19 +34,12 @@ public class PostEntity {
     @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(name = "post_category",joinColumns = @JoinColumn(name = "postId"),inverseJoinColumns = @JoinColumn(name="categoryId"))
     private Set<CategoryEntity> categoryEntityList;
-    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "post_tag",joinColumns = @JoinColumn(name = "postId"),inverseJoinColumns = @JoinColumn(name="tagId"))
     private Set<TagEntity> tagEntityList;
     @OneToMany(mappedBy = "postByPostId",fetch = FetchType.EAGER)
     private Set<PostLikeEntity> postLikesById;
-
-    public Set<PostLikeEntity> getPostLikesById() {
-        return postLikesById;
-    }
-
-    public void setPostLikesById(Set<PostLikeEntity> postLikesById) {
-        this.postLikesById = postLikesById;
-    }
+    
 
     public Set<TagEntity> getTagEntityList() {
         return tagEntityList;
@@ -55,11 +49,11 @@ public class PostEntity {
         this.tagEntityList = tagEntityList;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -134,5 +128,12 @@ public class PostEntity {
 
     public void setCategoryEntityList(Set<CategoryEntity> categoryEntityList) {
         this.categoryEntityList = categoryEntityList;
+    }
+    public Set<PostLikeEntity> getPostLikesById() {
+        return postLikesById;
+    }
+
+    public void setPostLikesById(Set<PostLikeEntity> postLikesById) {
+        this.postLikesById = postLikesById;
     }
 }
