@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LandingComponent } from './landing/landing.component';
@@ -11,13 +11,15 @@ import {RouterModule} from '@angular/router';
 import { ShowblogComponent } from './showblog/showblog.component';
 import { IndexUserComponent } from './index-user/index-user.component';
 import { AboutmeComponent } from './aboutme/aboutme.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,
+        FormsModule,ReactiveFormsModule,
         NgbModule,
         RouterModule,
+        HttpClientModule
     ],
     declarations: [
         LandingComponent,
@@ -26,7 +28,7 @@ import { AboutmeComponent } from './aboutme/aboutme.component';
         RegisterComponent,
         ShowblogComponent,
         IndexUserComponent,
-        AboutmeComponent
+        AboutmeComponent,
     ]
 })
 export class ExamplesModule { }

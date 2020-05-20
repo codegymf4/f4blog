@@ -6,5 +6,6 @@ export interface UserJwt {
     roles?: string[];
     avatar?: string;
     password?: string;
+    email?: string;
 
 }
