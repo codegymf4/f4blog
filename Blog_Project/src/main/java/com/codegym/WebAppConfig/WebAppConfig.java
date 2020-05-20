@@ -1,16 +1,7 @@
 package com.codegym.WebAppConfig;
 
-//<<<<<<< HEAD
-//
-//=======
-//import com.codegym.repository.PostRepository;
-//
-//import com.codegym.repository.impl.PostRepositoryImpl;
-//
-//import com.codegym.service.PostService;
-//
-//import com.codegym.service.impl.PostServiceImpl;
-//>>>>>>> 1bf85888c62d509e0284f92ba6d55a9faa3e29fb
+import com.codegym.Repository.IUserRepoHQL;
+import com.codegym.Repository.impl.UserRepo;
 import com.codegym.Service.IUserService;
 import com.codegym.Service.impl.UserService;
 import org.springframework.beans.BeansException;
@@ -53,6 +44,17 @@ import javax.sql.DataSource;
 import java.util.Locale;
 import java.util.Properties;
 
+//<<<<<<< HEAD
+//
+//=======
+//import com.codegym.repository.PostRepository;
+//
+//import com.codegym.repository.impl.PostRepositoryImpl;
+//
+//import com.codegym.service.PostService;
+//
+//import com.codegym.service.impl.PostServiceImpl;
+//>>>>>>> 1bf85888c62d509e0284f92ba6d55a9faa3e29fbAn authentication system based on tokens (JWT or random) stored in cookies is vulnerable to CSRF attacks, because cookies are sent automatically to server in each request and an attacker could build a harmful url link to your site.
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
@@ -66,6 +68,11 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
 
     @Autowired
     Environment environment;
+
+    @Bean
+    public IUserRepoHQL userRepo() {
+        return new UserRepo();
+    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -112,7 +119,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
         templateResolver.setSuffix(".html");
 
         templateResolver.setTemplateMode(TemplateMode.HTML);
-         templateResolver.setCharacterEncoding("UTF-8");
+        templateResolver.setCharacterEncoding("UTF-8");
 
         return templateResolver;
     }
@@ -148,7 +155,26 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
     @Qualifier(value = "entityManager")
     public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
         return entityManagerFactory.createEntityManager();
-    }
+    }//package com.codegym.Service.impl;
+//
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.stereotype.Service;
+//
+//
+//
+//@Service
+//public class JwtService {
+//    private static final String SECRET_KEY = "groupf4";
+//    private static final long EXPIRE_TIME = 86400000000L;
+//    private static final Logger logger = LoggerFactory.getLogger(JwtService.class.getName());
+//
+//    public String generateTokenLogin(Authentication authentication) {
+//        authentication.getPrincipal();
+//    }
+//}
+
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -179,7 +205,6 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
         return properties;
     }
 
-    @Bean
-    public IUserService getUserService(){return new UserService(); }
+
 
 }

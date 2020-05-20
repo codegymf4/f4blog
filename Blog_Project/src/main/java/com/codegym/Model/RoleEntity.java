@@ -12,6 +12,14 @@ public class RoleEntity {
     private String roleName;
     private List<UserEntity> userEntityList;
 
+    public RoleEntity() {
+    }
+
+    public RoleEntity(Long id, String roleName) {
+        this.id = id;
+        this.roleName = roleName;
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
