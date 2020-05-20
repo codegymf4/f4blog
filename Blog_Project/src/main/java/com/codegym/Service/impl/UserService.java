@@ -35,7 +35,7 @@ public class UserService implements IUserService {
     }
 
     public void delete(Long id) {
-        this.userRepo.delete(id);
+        this.userRepo.deleteById(id);
     }
 
     public void save(UserEntity userEntity) {
