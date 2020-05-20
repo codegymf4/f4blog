@@ -11,6 +11,7 @@ import {FooterComponent} from './shared/footer/footer.component';
 
 import {ExamplesModule} from './examples/examples.module';
 import { DashboardComponent } from './components_user/dashboard/dashboard.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { DashboardComponent } from './components_user/dashboard/dashboard.compon
         RouterModule,
         ExamplesModule,
         AppRoutingModule,
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent]
