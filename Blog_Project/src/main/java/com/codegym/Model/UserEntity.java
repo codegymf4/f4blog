@@ -40,7 +40,7 @@ public class UserEntity {
         this.id = id;
     }
 
-    @Column(name = "userName")
+    @Column(name = "userName",unique = true)
     public String getUserName() {
         return userName;
     }

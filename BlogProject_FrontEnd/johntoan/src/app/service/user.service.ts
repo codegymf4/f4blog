@@ -10,7 +10,7 @@ import {stringify} from "querystring";
 })
 export class UserService {
   urlLogin: string = "http://localhost:8080/Gradle___org_example___Blog_Project_1_0_SNAPSHOT_war/login";
-  urlRegister: string = "http://localhost:8080/Gradle___org_example___Blog_Project_1_0_SNAPSHOT_war/";
+  urlRegister: string = "http://localhost:8080/Gradle___org_example___Blog_Project_1_0_SNAPSHOT_war/api/adduser";
   private users: BehaviorSubject<UserJwt[]> = new BehaviorSubject([]);
   private user: BehaviorSubject<UserJwt> = new BehaviorSubject<UserJwt>(new class implements UserJwt {
     id: string;
@@ -53,7 +53,6 @@ export class UserService {
 
   loginCatch(s: string): string {
     if (s=="403"){
-
         return "wrong password or username";}
     if (s=="404"){
         return "dont have this acction link";}else {
@@ -71,7 +70,7 @@ export class UserService {
           this.login(user.userName, user.password);
         },
             error => {
-          alert(user.userName)
+          alert(user.userName);
               console.log(error);
             });
   }

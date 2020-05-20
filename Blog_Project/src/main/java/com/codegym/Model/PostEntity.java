@@ -14,7 +14,7 @@ public class PostEntity {
 
 
 
-    @Column(name = "title")
+    @Column(name = "title",unique = true)
     private String title;
     @Column(name = "publishedStatus")
     private byte publishedStatus = 0;
