@@ -12,6 +12,7 @@ import { ShowblogComponent } from './showblog/showblog.component';
 import { IndexUserComponent } from './index-user/index-user.component';
 import { AboutmeComponent } from './aboutme/aboutme.component';
 import {HttpClientModule} from "@angular/common/http";
+import { CreatePostComponent } from './create-post/create-post.component';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import {HttpClientModule} from "@angular/common/http";
         ShowblogComponent,
         IndexUserComponent,
         AboutmeComponent,
+        CreatePostComponent
     ]
 })
 export class ExamplesModule { }

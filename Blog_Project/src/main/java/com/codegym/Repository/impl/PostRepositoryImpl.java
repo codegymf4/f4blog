@@ -28,14 +28,14 @@ public class PostRepositoryImpl implements PostRepository {
         query.setParameter("id", id);
         try {
             return query.getSingleResult();
-        }catch (NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
     }
 
     @Override
     public void save(PostEntity model) {
-        if(model.getId() != null){
+        if (model.getId() != null) {
             em.merge(model);
         } else {
             em.persist(model);
@@ -45,7 +45,7 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public void remove(Long id) {
         PostEntity postEntity = findById(id);
-        if(postEntity != null){
+        if (postEntity != null) {
             em.remove(postEntity);
         }
     }
