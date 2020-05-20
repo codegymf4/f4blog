@@ -27,13 +27,6 @@ public class WebController {
     JwtService jwtService;
     @Autowired
     AuthenticationManager authenticationManager;
-
-    @PostMapping("/create-account")
-    public void createAccount(@RequestBody UserEntity userEntity) {
-        System.out.println(userEntity.getEmail());
-        System.out.println(userEntity.getUserName());
-        System.out.println(userEntity.getPassword());
-    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserEntity userEntity) {
         Authentication authentication = authenticationManager.authenticate(
