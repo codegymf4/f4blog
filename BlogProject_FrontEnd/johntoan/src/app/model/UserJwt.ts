@@ -1,8 +1,9 @@
 export interface UserJwt {
     id: string;
-    email: string;
-    name: string;
-    image: string;
-    token?: string;
-    idToken?: string;
+    token: string;
+    type: string;
+    userName: string;
+    roles?: string[];
+    avatar?: string;
+
 }
