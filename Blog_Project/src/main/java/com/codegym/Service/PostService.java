@@ -14,4 +14,5 @@ public interface PostService  {
     void save(PostEntity postEntity);
 
     void remove(Long id);
+
 }

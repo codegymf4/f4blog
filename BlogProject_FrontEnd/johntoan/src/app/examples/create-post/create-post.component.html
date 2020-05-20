@@ -1,0 +1,72 @@
+<div class="page-header" data-parallax="true" style="background-image: url('./assets/img/daniel-olahh.jpg');">
+    <div class="filter"></div>
+    <div class="container">
+        <div class="motto text-center">
+            <h1 class="presentation-title">F4 Blogger</h1>
+            <br>
+            <h2 class="text-center">Chào mừng bạn đến với trang web của chúng tôi</h2>
+            <br/>
+            <br>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mr-auto ml-auto">
+                    <h1 class="title">Create Blog</h1>
+                    <!--                    <a [routerLink]="['/aboutme']" class="btn btn-danger btn-round">Create New Blog</a>-->
+                </div>
+            </div>
+            <br/><br/>
+            <hr color="zed">
+
+
+            <form class="col-8">
+                <div class="form-group">
+                    <h4 for="exampleFormControlInput1">Title</h4>
+                    <br>
+                    <input type="text" class="form-control" id="title"
+                           placeholder="nhập title" [(ngModel)]="title">
+                </div>
+                <br>
+                <div class="form-group">
+                    <h4 for="exampleFormControlSelect1">PublishedStatus</h4>
+                    <br>
+                    <select class="form-control" id="publishedStatus" [(ngModel)]="publishedStatus">
+                        <option>0</option>
+                        <option>1</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-group">
+                    <h4 for="exampleFormControlInput1">PublishTime</h4>
+                    <br>
+                    <input type="date" class="form-control" id="publishTime" [(ngModel)]="publishTime">
+                </div>
+                <br>
+                <form>
+                    <div class="form-group">
+                        <h4 for="media">Media</h4>
+                        <br>
+                        <input type="file" class="form-control-file" id="media">
+                    </div>
+                </form>
+                <div class="form-group">
+                    <h4 for="exampleFormControlTextarea1">Content</h4>
+                    <br>
+                    <textarea class="form-control" id="content" rows="3" [(ngModel)]="content"></textarea>
+                </div>
+
+                <br>
+                <br>
+                <a [routerLink]="['/createPost']" class="btn btn-danger btn-round" (click)="createPost()">Create Blog</a>
+            </form>
+            <br>
+            <br><br>
+            <br>
+        </div>
+    </div>
+</div>
