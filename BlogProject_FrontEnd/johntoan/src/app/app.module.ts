@@ -11,7 +11,8 @@ import {FooterComponent} from './shared/footer/footer.component';
 
 import {ExamplesModule} from './examples/examples.module';
 import { DashboardComponent } from './components_user/dashboard/dashboard.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {InterceptorService} from "./service/interceptor.service";
 
 @NgModule({
     declarations: [
@@ -24,13 +25,12 @@ import {HttpClientModule} from "@angular/common/http";
         AppRoutingModule,FormsModule,ReactiveFormsModule,
         BrowserModule,
         NgbModule,
-        FormsModule,
         RouterModule,
         ExamplesModule,
         AppRoutingModule,
         HttpClientModule
     ],
-    providers: [],
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
     bootstrap: [AppComponent]
 })
 export class AppModule {

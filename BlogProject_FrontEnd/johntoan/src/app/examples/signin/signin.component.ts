@@ -29,6 +29,5 @@ export class SigninComponent implements OnInit {
     save() {
         this.userService.getMessage().subscribe(m => this.message = m);
         this.userService.login(this.userLoginForm.value.userName,this.userLoginForm.value.password);
-
     }
 }

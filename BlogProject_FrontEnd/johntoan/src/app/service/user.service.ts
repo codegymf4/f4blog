@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {UserJwt} from "../examples/model/UserJwt";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {stringify} from "querystring";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,10 @@ export class UserService {
 
   }
 
+  logout() {
+    localStorage.removeItem('currentUser');
+  }
+
   login(name: string, pass: string) {
     let user: UserJwt = {
       userName: name,
@@ -33,6 +38,7 @@ export class UserService {
     this.httpClient.post(this.urlLogin,user).subscribe( result => {
       this.user.next(result);
       this.message.next("success");
+      localStorage.setItem('currentUser', stringify(this.user.value));
       console.log(this.user.getValue());
       this.router.navigate(["/"]);
     },error => {
@@ -56,17 +62,21 @@ export class UserService {
 
   }
 
-  createUser(name: string, pass: string, email: string) {
+  createUser(user: UserJwt) {
     this.message.next("");
-    let user: UserJwt = {
-      userName: name,
-      password: pass,
-      email:email
-    };
 
-    this.httpClient.post(this.urlRegister,user)
+    this.httpClient.post(this.urlRegister, user).subscribe(
+        result => {
+          console.log(result);
+          this.login(user.userName, user.password);
+        },
+            error => {
+          alert(user.userName)
+              console.log(error);
+            });
+  }
 
-
-    this.login(name, pass);
+  getCurrentUserValue(): UserJwt {
+    return this.user.value
   }
 }
