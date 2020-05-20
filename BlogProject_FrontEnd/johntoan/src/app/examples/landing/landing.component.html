@@ -57,7 +57,7 @@
                         <div class="card">
                             <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <a [routerLink]="['/showblog']"><h5 class="card-title">{{post.title}}</h5></a>
+                                <a [routerLink]="['/showblog']" (click)="addPostToService(post)"><h5 class="card-title">{{post.title}}</h5></a>
                                 <p class="card-text">{{post.content}}</p>
                             </div>
                         </div>

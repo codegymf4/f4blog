@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Post} from '../model/Post';
 import {HttpClient} from '@angular/common/http';
+import {PostServiceService} from '../service/post-service.service';
 
 @Component({
     selector: 'app-landing',
@@ -13,7 +14,7 @@ export class LandingComponent implements OnInit {
     focus: any;
     focus1: any;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private postService: PostServiceService) {
     }
 
     ngOnInit() {
@@ -28,9 +29,9 @@ export class LandingComponent implements OnInit {
         });
     }
 
-    // getEdit(book: Books) {
-    //     this.bookService.setBook(book);
-    // }
+    addPostToService(post: Post) {
+        this.postService.setPost(post);
+    }
     //
     // deleteBook(books: Books) {
     //     if (confirm('Bạn muốn xóa chứ')) {
