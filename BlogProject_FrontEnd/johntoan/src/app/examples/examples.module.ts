@@ -10,6 +10,7 @@ import { RegisterComponent } from './register/register.component';
 import {RouterModule} from '@angular/router';
 import { ShowblogComponent } from './showblog/showblog.component';
 import { IndexUserComponent } from './index-user/index-user.component';
+import { AboutmeComponent } from './aboutme/aboutme.component';
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { IndexUserComponent } from './index-user/index-user.component';
         ProfileComponent,
         RegisterComponent,
         ShowblogComponent,
-        IndexUserComponent
+        IndexUserComponent,
+        AboutmeComponent
     ]
 })
 export class ExamplesModule { }
