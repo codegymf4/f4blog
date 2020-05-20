@@ -2,6 +2,7 @@ package com.codegym.Model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,18 +32,26 @@ public class PostEntity {
     private UserEntity userByUserId;
     @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(name = "post_category",joinColumns = @JoinColumn(name = "postId"),inverseJoinColumns = @JoinColumn(name="categoryId"))
-    private List<CategoryEntity> categoryEntityList;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<CategoryEntity> categoryEntityList;
+    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(name = "post_tag",joinColumns = @JoinColumn(name = "postId"),inverseJoinColumns = @JoinColumn(name="tagId"))
-    private List<TagEntity> tagEntityList;
-    @OneToMany(mappedBy = "postByPostId")
-    private List<PostLikeEntity> postLikesById;
+    private Set<TagEntity> tagEntityList;
+    @OneToMany(mappedBy = "postByPostId",fetch = FetchType.EAGER)
+    private Set<PostLikeEntity> postLikesById;
 
-    public List<TagEntity> getTagEntityList() {
+    public Set<PostLikeEntity> getPostLikesById() {
+        return postLikesById;
+    }
+
+    public void setPostLikesById(Set<PostLikeEntity> postLikesById) {
+        this.postLikesById = postLikesById;
+    }
+
+    public Set<TagEntity> getTagEntityList() {
         return tagEntityList;
     }
 
-    public void setTagEntityList(List<TagEntity> tagEntityList) {
+    public void setTagEntityList(Set<TagEntity> tagEntityList) {
         this.tagEntityList = tagEntityList;
     }
 
@@ -119,11 +128,11 @@ public class PostEntity {
         this.userByUserId = userByUserId;
     }
 
-    public List<CategoryEntity> getCategoryEntityList() {
+    public Set<CategoryEntity> getCategoryEntityList() {
         return categoryEntityList;
     }
 
-    public void setCategoryEntityList(List<CategoryEntity> categoryEntityList) {
+    public void setCategoryEntityList(Set<CategoryEntity> categoryEntityList) {
         this.categoryEntityList = categoryEntityList;
     }
 }

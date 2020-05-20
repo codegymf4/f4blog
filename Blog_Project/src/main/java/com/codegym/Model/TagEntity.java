@@ -1,5 +1,7 @@
 package com.codegym.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class TagEntity {
         this.tagname = tagname;
     }
     @ManyToMany(fetch = FetchType.LAZY,mappedBy = "tagEntityList",cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @JsonIgnore
     public List<PostEntity> getPostEntityList() {
         return postEntityList;
     }

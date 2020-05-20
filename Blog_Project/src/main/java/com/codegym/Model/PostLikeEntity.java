@@ -1,5 +1,7 @@
 package com.codegym.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -22,6 +24,7 @@ public class PostLikeEntity {
 
     @ManyToOne
     @JoinColumn(name = "postId", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     public PostEntity getPostByPostId() {
         return postByPostId;
     }
