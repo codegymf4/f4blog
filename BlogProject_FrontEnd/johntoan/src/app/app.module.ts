@@ -21,7 +21,6 @@ import {HttpClientModule} from "@angular/common/http";
         DashboardComponent,
     ],
     imports: [
-        HttpClientModule,
         AppRoutingModule,FormsModule,ReactiveFormsModule,
         BrowserModule,
         NgbModule,
@@ -29,6 +28,7 @@ import {HttpClientModule} from "@angular/common/http";
         RouterModule,
         ExamplesModule,
         AppRoutingModule,
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent]

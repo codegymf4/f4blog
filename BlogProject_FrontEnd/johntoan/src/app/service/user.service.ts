@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {UserJwt} from "../model/UserJwt";
+import {UserJwt} from "../examples/model/UserJwt";
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +10,11 @@ export class UserService {
   private user: BehaviorSubject<UserJwt[]> = new BehaviorSubject([]);
   private book: BehaviorSubject<UserJwt> = new BehaviorSubject<UserJwt>(new class implements UserJwt {
     id: string;
-    email: string;
-    name: string;
-    image: string;
-    token?: string;
-    idToken?: string;
+    token: string;
+    type: string;
+    userName: string;
+    roles?: string[];
+    avatar?: string;
   })
 
   constructor() { }
