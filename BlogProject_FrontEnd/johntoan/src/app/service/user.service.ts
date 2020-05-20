@@ -4,11 +4,14 @@ import {UserJwt} from "../examples/model/UserJwt";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {stringify} from "querystring";
+import {UserPost} from "../examples/model/UserPost";
+import {RoleEntity} from "../examples/model/RoleEntity";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  urlGetProfile: string = "http://localhost:8080/Gradle___org_example___Blog_Project_1_0_SNAPSHOT_war/api/getprofile/";
   urlLogin: string = "http://localhost:8080/Gradle___org_example___Blog_Project_1_0_SNAPSHOT_war/login";
   urlRegister: string = "http://localhost:8080/Gradle___org_example___Blog_Project_1_0_SNAPSHOT_war/api/adduser";
   private users: BehaviorSubject<UserJwt[]> = new BehaviorSubject([]);
@@ -19,7 +22,20 @@ export class UserService {
     userName: string;
     roles: string[];
     avatar: string;
-  })
+  });
+  userProfile: BehaviorSubject<UserPost> = new BehaviorSubject<UserPost>(new class implements UserPost {
+    email: string;
+    firstName: string;
+    id: number;
+    lastLogin: number;
+    lastName: string;
+    mobile: string;
+    password: string;
+    registeredAt: number;
+    roleEntityList: RoleEntity[];
+    srcAvatar: string;
+    userName: string;
+  });
   private message: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
   constructor(private httpClient: HttpClient,private router: Router) {
@@ -28,6 +44,12 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('currentUser');
+  }
+
+  getUserInfor() {
+   var userName: string = localStorage.getItem('currentUserName');
+    alert(userName);
+    this.httpClient.get(this.urlGetProfile+userName).subscribe(u => this.userProfile.next(u))
   }
 
   login(name: string, pass: string) {
@@ -39,6 +61,7 @@ export class UserService {
       this.user.next(result);
       this.message.next("success");
       localStorage.setItem('currentUser', stringify(this.user.value));
+      localStorage.setItem('currentUserName', this.user.value.userName);
       console.log(this.user.getValue());
       this.router.navigate(["/"]);
     },error => {

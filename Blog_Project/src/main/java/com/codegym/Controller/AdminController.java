@@ -33,6 +33,11 @@ public class AdminController {
         return list;
     }
 
+    @GetMapping(value = "/getprofile/{userName}")
+    public ResponseEntity<?> getUserByName(@PathVariable String userName) {
+       return ResponseEntity.ok(this.userService.findByUserName(userName));
+    }
+
     @DeleteMapping(value = "/deleteuser/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String deleteUserById(@PathVariable String id) {
         try {

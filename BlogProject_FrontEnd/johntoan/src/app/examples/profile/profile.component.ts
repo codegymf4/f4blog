@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {UserService} from "../../service/user.service";
+import {UserPost} from "../model/UserPost";
+import {BehaviorSubject} from "rxjs";
+import {RoleEntity} from "../model/RoleEntity";
 
 @Component({
     selector: 'app-profile',
@@ -7,9 +11,24 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class ProfileComponent implements OnInit {
+    userProfile: UserPost = new class implements UserPost {
+        email: string ="";
+        firstName: string="";
+        id: number=0;
+        lastLogin: number=0;
+        lastName: string="";
+        mobile: string;
+        password: string;
+        registeredAt: number;
+        roleEntityList: RoleEntity[];
+        srcAvatar: string;
+        userName: string;
+    };
 
-    constructor() { }
+    constructor(private userService: UserService) { }
 
-    ngOnInit() {}
+    ngOnInit() {this.userService.getUserInfor();
+        this.userService.userProfile.subscribe(b => this.userProfile = b);
+    }
 
 }
