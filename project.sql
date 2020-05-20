@@ -1,4 +1,5 @@
 use project;
+use project1;
 
 drop table user ;
 CREATE table user(
