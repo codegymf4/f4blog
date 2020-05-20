@@ -9,12 +9,17 @@ public class UserJwt {
     private String type = "Bearer";
     private String userName;
     private Collection<? extends GrantedAuthority> roles;
+    private String avatar;
 
-    public UserJwt(Long id, String token, String userName, Collection<? extends GrantedAuthority> roles) {
+    public UserJwt(Long id, String token, String userName, Collection<? extends GrantedAuthority> roles,String avatar) {
         this.id = id;
         this.token = token;
         this.userName = userName;
         this.roles = roles;
+        this.avatar = avatar;
+    }
+
+    public UserJwt() {
     }
 
     public Long getId() {
@@ -55,5 +60,13 @@ public class UserJwt {
 
     public void setRoles(Collection<? extends GrantedAuthority> roles) {
         this.roles = roles;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
