@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Post} from '../model/Post';
 import {HttpClient} from '@angular/common/http';
 import {PostServiceService} from '../service/post-service.service';
+import {UserService} from "../../service/user.service";
 
 @Component({
     selector: 'app-landing',
@@ -15,7 +16,7 @@ export class LandingComponent implements OnInit {
     focus1: any;
     introduce: string[];
 
-    constructor(private http: HttpClient, private postService: PostServiceService) {
+    constructor(private http: HttpClient, private postService: PostServiceService,private userService:UserService) {
     }
 
     ngOnInit() {
@@ -42,5 +43,8 @@ export class LandingComponent implements OnInit {
         this.postService.setPost(post);
     }
 
+    logout() {
+        this.userService.logout();
+    }
 
 }
