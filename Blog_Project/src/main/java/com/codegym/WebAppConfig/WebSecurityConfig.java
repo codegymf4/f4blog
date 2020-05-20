@@ -1,6 +1,5 @@
 package com.codegym.WebAppConfig;
 
-import com.codegym.Service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +10,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -50,9 +51,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
         http.addFilterBefore(characterEncodingFilter, CsrfFilter.class);
-        http.authorizeRequests().antMatchers( "/login").permitAll()
-                .and()
-                .authorizeRequests().antMatchers("/","/user").hasRole("USER")
+        http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.csrf().ignoringAntMatchers("/**");
+        http.authorizeRequests().antMatchers( "/","/api/login").permitAll()
                 .and()
 //                .authorizeRequests().antMatchers(HttpMethod.GET,"/api/*").hasRole("USER")
 //                .and()
@@ -63,13 +64,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/admin**").hasRole("ADMIN")
                 .and()
                 .csrf().disable()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("userName")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/")
-                .failureUrl("/login?error")
-                .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/logoutSuccessful");
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.cors();
     }
 }
