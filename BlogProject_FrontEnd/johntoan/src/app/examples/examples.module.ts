@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LandingComponent } from './landing/landing.component';
 import { ProfileComponent } from './profile/profile.component';
-import { SignupComponent } from './signup/signup.component';
+import { SigninComponent } from './signin/signin.component';
 import { RegisterComponent } from './register/register.component';
 import {RouterModule} from '@angular/router';
 import { ShowblogComponent } from './showblog/showblog.component';
@@ -22,7 +22,7 @@ import { CreatePostComponent } from './create-post/create-post.component';
     ],
     declarations: [
         LandingComponent,
-        SignupComponent,
+        SigninComponent,
         ProfileComponent,
         RegisterComponent,
         ShowblogComponent,

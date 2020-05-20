@@ -2,8 +2,6 @@ package com.codegym.Model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
