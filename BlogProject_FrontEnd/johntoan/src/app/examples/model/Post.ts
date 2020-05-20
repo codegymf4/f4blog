@@ -13,7 +13,7 @@ export interface Post {
     updatedAt: number,
     content: string,
     commentsById: CommentPost[],
-    userByUserId: UserPost[],
+    userByUserId: UserPost,
     categoryEntityList: CategoryEntity[],
     tagEntityList: TagEntity[],
     postLikesById: PostLikes[]
