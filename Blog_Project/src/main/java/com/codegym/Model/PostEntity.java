@@ -15,7 +15,7 @@ public class PostEntity {
     @Column(name = "title")
     private String title;
     @Column(name = "publishedStatus")
-    private byte publishedStatus;
+    private byte publishedStatus = 0;
     @Column(name = "publishTime")
     private Timestamp publishTime;
     @Column(name = "createdAt")
