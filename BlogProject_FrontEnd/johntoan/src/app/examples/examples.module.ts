@@ -11,6 +11,7 @@ import {RouterModule} from '@angular/router';
 import { ShowblogComponent } from './showblog/showblog.component';
 import { IndexUserComponent } from './index-user/index-user.component';
 import { AboutmeComponent } from './aboutme/aboutme.component';
+import { CreatePostComponent } from './create-post/create-post.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { AboutmeComponent } from './aboutme/aboutme.component';
         RegisterComponent,
         ShowblogComponent,
         IndexUserComponent,
-        AboutmeComponent
+        AboutmeComponent,
+        CreatePostComponent
     ]
 })
 export class ExamplesModule { }

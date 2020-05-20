@@ -1,6 +1,3 @@
-<script src="js.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
 <div class="page-header" data-parallax="true" style="background-image: url('./assets/img/daniel-olahh.jpg');">
     <div class="filter"></div>
     <div class="container">
@@ -14,11 +11,6 @@
     </div>
 </div>
 
-
-<h1>My Web Page</h1>
-
-<div id="piechart"></div>
-
 <div class="main">
     <div class="section text-center">
         <div class="container">
@@ -26,40 +18,47 @@
                 <div class="col-md-8 mr-auto ml-auto">
                     <h2 class="title">List Blog by me</h2>
                     <br>
-                    <a [routerLink]="['/aboutme']" class="btn btn-danger btn-round">Create New Blog</a>
+                    <a [routerLink]="['/createPost']" class="btn btn-danger btn-round">Create Blog</a>
                 </div>
             </div>
             <br/><br/>
             <hr color="zed">
 
             <ul class="list-unstyled">
-                <li class="media">
-                    <img class="mr-3" src="./assets/img/faces/clem-onojeghuo-3.jpg" alt="Generic placeholder image">
+                <li class="media" *ngFor="let post of listPost">
+                    <img class="img-thumbnail" src="./assets/img/faces/clem-onojeghuo-3.jpg"
+                         alt="Generic placeholder image" width="304" height="236">
                     <div class="media-body">
-                        <h5 class="mt-0 mb-1">List-based media object</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
-                        purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-                        vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        <h5 class="mt-0 mb-1">{{post.title}}</h5>
+                        <p class="card-text">{{sliceConten(post.content)}}</p>
+                        <br>
+                        <br>
+                        <div class="col-md-6 ml-auto mr-auto text-center">
+                            <button class="btn btn-info btn-round">EDIT</button>
+                            <button class="btn btn btn-info btn-round" (click)="deletePost(post)">DELETE</button>
+                        </div>
                     </div>
+                    <hr>
                 </li>
-                <li class="media my-4">
-                    <img class="mr-3" src="./assets/img/faces/clem-onojeghuo-3.jpg" alt="Generic placeholder image">
-                    <div class="media-body">
-                        <h5 class="mt-0 mb-1">List-based media object</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
-                        purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-                        vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </li>
-                <li class="media">
-                    <img class="mr-3" src="./assets/img/faces/clem-onojeghuo-3.jpg" alt="Generic placeholder image">
-                    <div class="media-body">
-                        <h5 class="mt-0 mb-1">List-based media object</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
-                        purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-                        vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </li>
+
+                <!--                <li class="media my-4">-->
+                <!--                    <img class="mr-3" src="./assets/img/faces/clem-onojeghuo-3.jpg" alt="Generic placeholder image">-->
+                <!--                    <div class="media-body">-->
+                <!--                        <h5 class="mt-0 mb-1">List-based media object</h5>-->
+                <!--                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras-->
+                <!--                        purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi-->
+                <!--                        vulputate fringilla. Donec lacinia congue felis in faucibus.-->
+                <!--                    </div>-->
+                <!--                </li>-->
+                <!--                <li class="media">-->
+                <!--                    <img class="mr-3" src="./assets/img/faces/clem-onojeghuo-3.jpg" alt="Generic placeholder image">-->
+                <!--                    <div class="media-body">-->
+                <!--                        <h5 class="mt-0 mb-1">List-based media object</h5>-->
+                <!--                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras-->
+                <!--                        purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi-->
+                <!--                        vulputate fringilla. Donec lacinia congue felis in faucibus.-->
+                <!--                    </div>-->
+                <!--                </li>-->
             </ul>
 
             <div class="row">
