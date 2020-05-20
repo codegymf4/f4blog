@@ -1,28 +1,10 @@
-<!--<div class="page-header" data-parallax="true" style="background-image: url('./assets/img/daniel-olahh.jpg');">-->
-<!--    <div class="filter"></div>-->
-<!--    <div class="container">-->
-<!--        <div class="motto text-center">-->
-<!--            <h1 class="display-1">F4 Blogger</h1>-->
-<!--            <br>-->
-<!--            <h3>Chào mừng bạn đến với trang web của chúng tôi</h3>-->
-<!--            <br/>-->
-<!--            <br>-->
-<!--            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="btn btn-outline-neutral btn-round">Đăng-->
-<!--                nhập</a>-->
-<!--            <button type="button" class="btn btn-outline-neutral btn-round">Đăng ký</button>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
 <div class="wrapper">
     <div class="page-header section-dark" style="background-image: url('assets/img/antoine-barres.jpg')">
         <div class="filter"></div>
         <div class="content-center">
             <div class="container">
                 <div class="title-brand">
-                    <!--                    <div class="angular-logo">-->
-                    <!--                        <img src="assets/img/angular2-logo.png" alt="">-->
-                    <!--                    </div>-->
+
                     <h1 class="presentation-title">F4 Blogger</h1>
                     <div class="fog-low">
                         <img src="assets/img/fog-low.png" alt="">
@@ -71,90 +53,88 @@
                 <br>
                 <br>
                 <div class="row row-cols-1 row-cols-md-2 ">
-                    <div class="col mb-4">
+                    <div class="col mb-4" *ngFor="let post of listPost">
                         <div class="card">
                             <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>
-                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in
-                                    to additional content. This content is a little bit longer.</p>
+                                <a [routerLink]="['/showblog']"><h5 class="card-title">{{post.title}}</h5></a>
+                                <p class="card-text">{{post.content}}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col mb-4">
-                        <div class="card">
-                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in
-                                    to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-4">
-                        <div class="card">
-                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in
-                                    to additional content.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-4">
-                        <div class="card">
-                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in
-                                    to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row row-cols-1 row-cols-md-2 ">
-                    <div class="col mb-4">
-                        <div class="card">
-                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in
-                                    to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-4">
-                        <div class="card">
-                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in
-                                    to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-4">
-                        <div class="card">
-                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in
-                                    to additional content.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-4">
-                        <div class="card">
-                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in
-                                    to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!--                    <div class="col mb-4">-->
+<!--                        <div class="card">-->
+<!--                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">-->
+<!--                            <div class="card-body">-->
+<!--                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural-->
+<!--                                    lead-in-->
+<!--                                    to additional content. This content is a little bit longer.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col mb-4">-->
+<!--                        <div class="card">-->
+<!--                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">-->
+<!--                            <div class="card-body">-->
+<!--                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural-->
+<!--                                    lead-in-->
+<!--                                    to additional content.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col mb-4">-->
+<!--                        <div class="card">-->
+<!--                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">-->
+<!--                            <div class="card-body">-->
+<!--                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural-->
+<!--                                    lead-in-->
+<!--                                    to additional content. This content is a little bit longer.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="row row-cols-1 row-cols-md-2 ">-->
+<!--                    <div class="col mb-4">-->
+<!--                        <div class="card">-->
+<!--                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">-->
+<!--                            <div class="card-body">-->
+<!--                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural-->
+<!--                                    lead-in-->
+<!--                                    to additional content. This content is a little bit longer.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col mb-4">-->
+<!--                        <div class="card">-->
+<!--                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">-->
+<!--                            <div class="card-body">-->
+<!--                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural-->
+<!--                                    lead-in-->
+<!--                                    to additional content. This content is a little bit longer.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col mb-4">-->
+<!--                        <div class="card">-->
+<!--                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">-->
+<!--                            <div class="card-body">-->
+<!--                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural-->
+<!--                                    lead-in-->
+<!--                                    to additional content.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col mb-4">-->
+<!--                        <div class="card">-->
+<!--                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">-->
+<!--                            <div class="card-body">-->
+<!--                                <a [routerLink]="['/showblog']"><h5 class="card-title">Card title</h5></a>                                <p class="card-text">This is a longer card with supporting text below as a natural-->
+<!--                                    lead-in-->
+<!--                                    to additional content. This content is a little bit longer.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <br>
                 <br>
