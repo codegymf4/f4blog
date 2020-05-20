@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app.routing';
@@ -11,6 +11,7 @@ import {FooterComponent} from './shared/footer/footer.component';
 
 import {ExamplesModule} from './examples/examples.module';
 import { DashboardComponent } from './components_user/dashboard/dashboard.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -20,6 +21,8 @@ import { DashboardComponent } from './components_user/dashboard/dashboard.compon
         DashboardComponent,
     ],
     imports: [
+        HttpClientModule,
+        AppRoutingModule,FormsModule,ReactiveFormsModule,
         BrowserModule,
         NgbModule,
         FormsModule,
