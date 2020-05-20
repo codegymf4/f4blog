@@ -2,7 +2,6 @@ package com.codegym.Service.impl;
 
 import com.codegym.Model.RoleEntity;
 import com.codegym.Model.UserEntity;
-import com.codegym.MyUtil.MyUtil;
 import com.codegym.Repository.IUserRepo;
 import com.codegym.Repository.IUserRepoHQL;
 import com.codegym.Service.IUserService;

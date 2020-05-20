@@ -2,6 +2,7 @@ package com.codegym.Model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -37,15 +38,16 @@ public class PostEntity {
     private Set<CategoryEntity> categoryEntityList;
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "post_tag",joinColumns = @JoinColumn(name = "postId"),inverseJoinColumns = @JoinColumn(name="tagId"))
-    private List<TagEntity> tagEntityList;
+    private Set<TagEntity> tagEntityList;
     @OneToMany(mappedBy = "postByPostId",fetch = FetchType.EAGER)
     private Set<PostLikeEntity> postLikesById;
+    
 
-    public List<TagEntity> getTagEntityList() {
+    public Set<TagEntity> getTagEntityList() {
         return tagEntityList;
     }
 
-    public void setTagEntityList(List<TagEntity> tagEntityList) {
+    public void setTagEntityList(Set<TagEntity> tagEntityList) {
         this.tagEntityList = tagEntityList;
     }
 
