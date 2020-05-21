@@ -25,7 +25,7 @@ public class TagEntity {
     }
 
     @Basic
-    @Column(name = "tagname")
+    @Column(name = "tagname",unique = true)
     public String getTagname() {
         return tagname;
     }

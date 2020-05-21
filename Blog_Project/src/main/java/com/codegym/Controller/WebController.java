@@ -38,7 +38,8 @@ public class WebController {
         System.out.println(authentication.getPrincipal());
         System.out.println(userEntity.getUserName()+".."+userEntity.getPassword());
         UserEntity userEntity1 = this.userService.findByUserName(userEntity.getUserName());
-       Collection collec =  Collections.singleton(new SimpleGrantedAuthority(userEntity1.getRoleEntityList().iterator().next().getRoleName()));
+        System.out.println(userEntity.getUserName());
+        Collection collec =  Collections.singleton(new SimpleGrantedAuthority(userEntity1.getRoleEntityList().iterator().next().getRoleName()));
         return ResponseEntity.ok(new UserJwt(userEntity1.getId(),token,userEntity1.getUserName(),collec,userEntity1.getSrcAvatar()));
     }
 

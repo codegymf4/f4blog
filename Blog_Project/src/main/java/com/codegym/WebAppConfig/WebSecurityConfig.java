@@ -51,7 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
         http.addFilterBefore(characterEncodingFilter, CsrfFilter.class);
-        http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests().antMatchers( "/","/api/login").permitAll()
                 .and()
@@ -65,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/logoutSuccessful");
+        http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

@@ -32,7 +32,7 @@ public class RoleEntity {
     }
 
     @Basic
-    @Column(name = "roleName")
+    @Column(name = "roleName",unique = true)
     public String getRoleName() {
         return roleName;
     }

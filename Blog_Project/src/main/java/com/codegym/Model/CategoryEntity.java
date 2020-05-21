@@ -7,7 +7,7 @@ import java.util.List;
 @Table(name = "category", schema = "project")
 public class CategoryEntity {
     private long id;
-    @Column(name = "name")
+    @Column(name = "name",unique = true)
     private String name;
 
     private List<PostEntity> postEntityList;
