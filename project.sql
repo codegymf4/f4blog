@@ -16,6 +16,7 @@ index idx_username (userName asc)
 )
 
 
+
 insert into user(id,userName ,password ,firstName ,lastName ,mobile ,email ,lastLogin ,registeredAt ,srcAvatar ) values(1,"tu123","$2a$10$Ytcs5PtQi3ek7dU0ahjIQeuulvkOKo5yA0lbDdQYjlyqrJiAfn6oS","tu","dinh ngoc", "0919191658","bobontre@gmail.com","2020-05-18","2020-05-18","aa");
 insert into user values(1,"tu123","$2a$10$Ytcs5PtQi3ek7dU0ahjIQeuulvkOKo5yA0lbDdQYjlyqrJiAfn6oS","tu","dinh ngoc", "0919191658","bobontre@gmail.com","2020-05-18","2020-05-18","aa");
 SELECT * FROM user;
