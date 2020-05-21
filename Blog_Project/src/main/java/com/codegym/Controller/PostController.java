@@ -25,7 +25,7 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    //-------------------Retrieve All
+    //-------------------Retrieve all
     @RequestMapping(value = "/posts/", method = RequestMethod.GET)
     public ResponseEntity<List<PostEntity>> listAllPosts() {
         List<PostEntity> postEntities = postService.findAll();
