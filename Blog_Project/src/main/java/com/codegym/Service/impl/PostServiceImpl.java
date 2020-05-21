@@ -22,7 +22,6 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll();
     }
 
-
     @Override
     public PostEntity findById(Long id) {
         return postRepository.findById(id);
