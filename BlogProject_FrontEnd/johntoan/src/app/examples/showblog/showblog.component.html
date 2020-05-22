@@ -17,7 +17,9 @@
             </div>
             <div class="row">
 
-                    <h5>{{post.content}}</h5>
+<!--                    <h5>{{post.content}}</h5>-->
+                <div [innerHtml] ="post.content"></div>
+<!--                <ng-template #elseBlock><h5  [innerHTML]="post.content"></h5></ng-template>-->
                     <br/>
                 <div class="col-md-6 ml-auto mr-auto text-center">
                     <button class="btn btn-info btn-round"> Like</button>

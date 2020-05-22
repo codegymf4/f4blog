@@ -16,6 +16,7 @@ export class ShowblogComponent implements OnInit {
 
     ngOnInit(): void {
         this.postService.getPost().subscribe(b => this.post = b);
+        console.log(this.post);
     }
 
 }

@@ -11,7 +11,7 @@ import {UserService} from "../../service/user.service";
 })
 
 export class LandingComponent implements OnInit {
-    listPost: Post[];
+    listPost: Post[]=[];
     focus: any;
     focus1: any;
     introduce: string[];
@@ -20,24 +20,33 @@ export class LandingComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getAllBook();
+        // this.getAllBook();
+        this.getAllPost();
     }
 
-    sliceConten(conten: string) {
-        if (conten.length > 400) {
-            return conten.slice(0, 400) + '...';
-        } else {
-            return conten;
-        }
-    }
+    // sliceConten(conten: string) {
+    //     if (conten.length > 400) {
+    //         return conten.slice(0, 400) + '...';
+    //     } else {
+    //         return conten;
+    //     }
+    // }
 
-    getAllBook() {
-        const url = 'http://localhost:8080/posts/';
-        this.http.get<Post[]>(url).subscribe((resJson) => {
+    baseUrl:string = 'http://localhost:8080/getAllPosts';
+    getAllPost(){
+        this.http.get<Post[]>(this.baseUrl).subscribe((resJson) => {
             this.listPost = resJson;
             console.log(this.listPost);
         });
     }
+
+    // getAllBook() {
+    //     const url = 'http://localhost:8080/posts/';
+    //     this.http.get<Post[]>(url).subscribe((resJson) => {
+    //         this.listPost = resJson;
+    //         console.log(this.listPost);
+    //     });
+    // }
 
     addPostToService(post: Post) {
         this.postService.setPost(post);

@@ -43,7 +43,7 @@ public class PostController {
     //--------------------------TOAN----------------------
 
     //--------------------------TIEN----------------------
-    @RequestMapping(value = "/getAllPosts/", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAllPosts", method = RequestMethod.GET)
     public ResponseEntity<List<PostEntity>> listAllPosts() {
         List<PostEntity> postEntities = postService.findAll();
         if (postEntities.isEmpty()) {
