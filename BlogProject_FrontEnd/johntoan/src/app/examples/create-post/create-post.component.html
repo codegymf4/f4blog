@@ -13,10 +13,10 @@
 
                 <div class="form-group">
                     <div class="col-sm-12">
-                        <label for="content" class="control-label required" style="color: white; font-size: 17px">Content</label>
-                        <textarea id="content" class="form-control" formControlName="content" style="height: 300px">
-                Enter text here...
-            </textarea>
+                        <label  class="control-label required" style="color: white; font-size: 17px">Content</label>
+                        <ckeditor [editor]="Editor" (change)="saveContentOfPost($event)" formControlName="content" ></ckeditor>
+<!--                        <textarea id="content" class="form-control" formControlName="content" style="height: 300px">-->
+<!--                Enter text here...</textarea>-->
                     </div>
                 </div>
 

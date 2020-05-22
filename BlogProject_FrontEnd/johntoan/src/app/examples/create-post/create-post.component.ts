@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {PostService} from "../../service/post.service";
 import {Router} from "@angular/router";
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {ChangeEvent} from "@ckeditor/ckeditor5-angular";
 
 @Component({
     selector: 'app-create-post',
@@ -9,6 +11,7 @@ import {Router} from "@angular/router";
     styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
+    public Editor = ClassicEditor;
 
     postForm:any = FormGroup;
     selectedFiles: File[] = [];
@@ -49,6 +52,12 @@ export class CreatePostComponent implements OnInit {
         });
     }
 
+    saveContentOfPost( { editor }: ChangeEvent ) {
+        const data = editor.getData();
+
+        this.postForm.controls.content.value= data;
+        console.log( this.postForm.controls.content.value);
+    }
 
     reset(){}
     displayFieldCss(field:string){}

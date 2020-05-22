@@ -52,7 +52,7 @@ public class MediaEntity {
         this.userByUserId = userByUserId;
     }
 
-    @Column(name = "mediaName", unique = true)
+    @Column(name = "mediaName")
     public String getMediaName() {
         return mediaName;
     }
