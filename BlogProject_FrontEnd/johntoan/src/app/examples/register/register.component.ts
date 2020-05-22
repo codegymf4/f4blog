@@ -27,6 +27,8 @@ export class RegisterComponent implements OnInit {
   }
 
   save() {
+    let confirmPassword = (document.getElementById('repassword') as HTMLInputElement).value;
+    console.log(confirmPassword);
     this.userService.getMessage().subscribe(m => this.message = m);
     let user: UserJwt = this.userRegisterForm.value;
     this.userService.createUser(user);

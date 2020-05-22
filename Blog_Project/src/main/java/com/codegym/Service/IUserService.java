@@ -14,4 +14,6 @@ public interface IUserService extends UserDetailsService {
 
     UserEntity findByUserName(String userName);
 
+    UserEntity findByEmail(String email);
+
 }

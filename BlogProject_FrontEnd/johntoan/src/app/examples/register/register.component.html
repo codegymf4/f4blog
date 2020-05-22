@@ -16,6 +16,7 @@
                             <a href="#pablo" class="btn btn-neutral btn-twitter btn-just-icon">
                                 <i class="fa fa-twitter"></i>
                             </a>
+                            <div>{{message}}</div>
                         </div>
                         <form class="register-form" [formGroup]="userRegisterForm" (ngSubmit)="save()">
                             <label>User Name</label>
@@ -48,6 +49,15 @@
                                   </span>
                                 </div>
                                 <input type="password" class="form-control" placeholder="Password" (focus)="focus1=true" (blur)="focus1=false" formControlName="password">
+                            </div>
+                            <label>Confirm Password</label>
+                            <div class="input-group form-group-no-border" [ngClass]="{'input-group-focus':focus1===true}">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                      <i class="nc-icon nc-key-25"></i>
+                                  </span>
+                                </div>
+                                <input id="repassword" type="password" class="form-control" placeholder="Password" (focus)="focus1=true" (blur)="focus1=false">
                             </div>
                             <br>
                             <button type="submit" class="btn btn-success btn-block btn-round">Register</button>

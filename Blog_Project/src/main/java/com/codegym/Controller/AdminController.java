@@ -52,11 +52,16 @@ public class AdminController {
 
     @PostMapping(value = "/adduser")
     public ResponseEntity<?> addUser(@RequestBody UserEntity userEntity) {
-            System.out.println(userEntity.getUserName() + " " + userEntity.getEmail());
+        if (this.userService.findByUserName(userEntity.getUserName())!=null) {
+            String m = new String("duplicate username");
+            return ResponseEntity.ok(m);
+        }
+        if (this.userService.findByEmail(userEntity.getUserName())!=null) {
+            return ResponseEntity.ok("duplicate email");
+        }
             userEntity.setRegisteredAt(new Timestamp(new Date().getTime()));
             this.userService.save(userEntity);
-        System.out.println("thanh cong");
-            return ResponseEntity.ok(userEntity);
+            return ResponseEntity.ok("success");
     }
 
     @PutMapping(value = "/edituser", produces = MediaType.APPLICATION_JSON_VALUE)

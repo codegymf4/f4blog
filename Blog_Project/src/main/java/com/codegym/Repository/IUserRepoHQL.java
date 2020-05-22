@@ -4,4 +4,5 @@ import com.codegym.Model.UserEntity;
 
 public interface IUserRepoHQL {
     UserEntity findByUserName(String userName);
+    UserEntity findByEmail(String email);
 }

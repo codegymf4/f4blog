@@ -56,6 +56,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public UserEntity findByEmail(String email) {
+        return this.userRepoHQL.findByEmail(email);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         UserEntity userEntity = this.findByUserName(userName);
         if (userEntity == null) {
