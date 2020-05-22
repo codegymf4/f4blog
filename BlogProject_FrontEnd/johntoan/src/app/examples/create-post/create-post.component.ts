@@ -1,11 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Post} from '../model/Post';
-import {HttpClient} from '@angular/common/http';
-import {UserPost} from '../model/UserPost';
-import {CategoryEntity} from '../model/CategoryEntity';
-import {TagEntity} from '../model/TagEntity';
-import {PostLikes} from '../model/PostLikes';
-import {CommentPost} from '../model/CommentPost';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {PostService} from "../../service/post.service";
 import {Router} from "@angular/router";

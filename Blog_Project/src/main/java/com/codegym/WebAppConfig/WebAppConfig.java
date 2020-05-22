@@ -79,10 +79,10 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
         return new MediaRepositoryImpl();
     }
 
-    @Bean
-    public PostRepository postRepository(){
-        return new PostRepositoryImpl();
-    }
+//    @Bean
+//    public PostRepository postRepository(){
+//        return new PostRepositoryImpl();
+//    }
 
     @Bean
     public PostService postService(){

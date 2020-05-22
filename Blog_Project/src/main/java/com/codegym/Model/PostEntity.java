@@ -1,6 +1,7 @@
 package com.codegym.Model;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public class PostEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "title", unique = true)
+    @Column(name = "title")
     private String title;
     @Column(name = "publishedStatus")
     private byte publishedStatus = 0;
@@ -22,12 +23,12 @@ public class PostEntity {
     private Timestamp createdAt;
     @Column(name = "updatedAt")
     private Timestamp updatedAt;
-    @Column(name = "content")
+    @Column(name = "content",length = 15000)
     private String content;
     @OneToMany(mappedBy = "postByPostId", fetch = FetchType.EAGER)
     private Set<CommentEntity> commentsById;
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private UserEntity userByUserId;
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(name = "post_category", joinColumns = @JoinColumn(name = "postId"), inverseJoinColumns = @JoinColumn(name = "categoryId"))
@@ -37,6 +38,7 @@ public class PostEntity {
     private Set<TagEntity> tagEntityList;
     @OneToMany(mappedBy = "postByPostId", fetch = FetchType.EAGER)
     private Set<PostLikeEntity> postLikesById;
+
     public PostEntity() {
     }
 

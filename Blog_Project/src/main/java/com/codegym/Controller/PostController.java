@@ -9,6 +9,7 @@ import com.codegym.Service.IUserService;
 import com.codegym.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -42,9 +43,18 @@ public class PostController {
     //--------------------------TOAN----------------------
 
     //--------------------------TIEN----------------------
+    @RequestMapping(value = "/getAllPosts/", method = RequestMethod.GET)
+    public ResponseEntity<List<PostEntity>> listAllPosts() {
+        List<PostEntity> postEntities = postService.findAll();
+        if (postEntities.isEmpty()) {
+            return new ResponseEntity<List<PostEntity>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<List<PostEntity>>(postEntities, HttpStatus.OK);
+    }
 
     @PostMapping(value = "/savePost", consumes = "multipart/form-data")
     @ResponseBody
+    @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Response> addPost(@RequestPart("file[]") MultipartFile[] file, @ModelAttribute PostEntity post) {
         try {
             if (file != null) {
@@ -57,13 +67,21 @@ public class PostController {
 
         Long userId = 1L;
         UserEntity user = userService.findById(userId);
+        user.setCommentsById(null);
+        user.setMediaById(null);
+        user.setPostsById(null);
+        user.setPostLikesById(null);
 
         if(user !=null) {
             Date currentDate = new Date();
             Timestamp currentTime = new Timestamp(currentDate.getTime());
             post.setCreatedAt(currentTime);
             PostEntity newPost = new PostEntity(post.getTitle(),post.getCreatedAt(),post.getContent(),user);
-            postService.save(newPost);
+            try {
+                postService.save(newPost);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
             List<MediaEntity> mediaList = new ArrayList<>();
             for (int i = 0; i < file.length; i++) {
@@ -73,9 +91,13 @@ public class PostController {
                 String mediaType = file[i].getContentType();
                 String srcMedia = fileUpload + mediaName;
                 MediaEntity newMedia = new MediaEntity(srcMedia, mediaType, mediaName, user);
-                mediaService.save(newMedia);
-                MediaEntity media = mediaService.findById(newMedia.getId());
-                mediaList.add(media);
+                try {
+                    mediaService.save(newMedia);
+                    MediaEntity media = mediaService.findById(newMedia.getId());
+                    mediaList.add(media);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 // Luu file len server
                 try {
                     FileCopyUtils.copy(file[i].getBytes(), new File(fileUpload + mediaName));
@@ -83,7 +105,6 @@ public class PostController {
                     ex.printStackTrace();
                 }
             }
-
             if (newPost != null && (mediaList.size() == file.length)) {
                 return new ResponseEntity<Response>(new Response("Post saved successfully"), HttpStatus.OK);
             } else
@@ -99,8 +120,8 @@ public class PostController {
     //--------------------------DUNG----------------------
 
 
-//    //-------------------Retrieve all
-//    @RequestMapping(value = "/posts/", method = RequestMethod.GET)
+    //-------------------Retrieve all
+//    @RequestMapping(value = "/getAllPosts/", method = RequestMethod.GET)
 //    public ResponseEntity<List<PostEntity>> listAllPosts() {
 //        List<PostEntity> postEntities = postService.findAll();
 //        if (postEntities.isEmpty()) {
@@ -108,7 +129,7 @@ public class PostController {
 //        }
 //        return new ResponseEntity<List<PostEntity>>(postEntities, HttpStatus.OK);
 //    }
-//
+
 //    //-------------------Retrieve Single
 //    @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //    public ResponseEntity<PostEntity> getPost(@PathVariable("id") long id) {

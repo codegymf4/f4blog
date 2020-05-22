@@ -12,6 +12,9 @@ public class MediaEntity {
     private String mediaType;
     private UserEntity userByUserId;
 
+    public MediaEntity() {
+    }
+
     public MediaEntity(String srcMedia, String mediaName, String mediaType, UserEntity userByUserId) {
         this.srcMedia = srcMedia;
         this.mediaName = mediaName;
@@ -49,7 +52,7 @@ public class MediaEntity {
         this.userByUserId = userByUserId;
     }
 
-    @Column(name = "mediaName")
+    @Column(name = "mediaName", unique = true)
     public String getMediaName() {
         return mediaName;
     }
