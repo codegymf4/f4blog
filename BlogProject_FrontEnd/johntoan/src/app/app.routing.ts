@@ -13,6 +13,7 @@ import {IndexUserComponent} from './examples/index-user/index-user.component';
 import {AboutmeComponent} from './examples/aboutme/aboutme.component';
 import {CreatePostComponent} from './examples/create-post/create-post.component';
 import {AuthGuard} from "./examples/guards/auth.guard";
+import {EditPostComponent} from "./examples/edit-post/edit-post.component";
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -24,7 +25,9 @@ const routes: Routes = [
     { path: 'showblog/:id',          component: ShowblogComponent},
     { path: 'index',          component: IndexUserComponent },
     { path: 'aboutme',          component: AboutmeComponent,canActivate: [AuthGuard]},
-    { path: 'createPost',          component: CreatePostComponent }
+    { path: 'createPost',          component: CreatePostComponent },
+    { path: 'editPost/:id',          component: EditPostComponent }
+
 ];
 
 @NgModule({

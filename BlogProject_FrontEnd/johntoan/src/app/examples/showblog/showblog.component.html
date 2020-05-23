@@ -20,10 +20,20 @@
                 </div>
                 <div [innerHtml] ="post.content"></div>
             </div>
+<!--            <ckeditor name="content"-->
+<!--                      [editor]="Editor"-->
+<!--                      data=""-->
+<!--                      (ready)="onReady($event)"-->
+<!--                      [(ngModel)]="this.post.content">-->
+<!--            </ckeditor>-->
+            <script>
+
+            </script>
             <div class="row">
 
                     <br/>
                 <div class="col-md-6 ml-auto mr-auto text-center">
+                    <button class="btn btn-info btn-round" (click)="editPost(post)"> Edit</button>
                     <button class="btn btn-info btn-round"> Like</button>
                     <button class="btn btn btn-info btn-round"> Share</button>
                 </div>

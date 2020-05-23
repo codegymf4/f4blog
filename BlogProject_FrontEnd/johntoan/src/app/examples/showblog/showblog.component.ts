@@ -9,7 +9,7 @@ import {PostLikes} from "../model/PostLikes";
 import {TagEntity} from "../model/TagEntity";
 import {PostService} from "../../service/post.service";
 import {HttpClient} from "@angular/common/http";
-
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 @Component({
     selector: 'app-showblog',
     templateUrl: './showblog.component.html',
@@ -18,6 +18,8 @@ import {HttpClient} from "@angular/common/http";
 export class ShowblogComponent implements OnInit {
 
     postList: Post[]=[];
+
+    public Editor = DecoupledEditor;
     private post: Post = new class implements Post {
         categoryEntityList: CategoryEntity[];
         commentsById: CommentPost[];
@@ -51,6 +53,11 @@ export class ShowblogComponent implements OnInit {
                 });
             }
         });
+    }
+
+    editPost(post:Post){
+        this.router.navigate(['editPost',post.id]);
+
     }
 
 }
