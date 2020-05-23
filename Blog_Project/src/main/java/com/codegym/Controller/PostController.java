@@ -10,15 +10,11 @@ import com.codegym.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,14 +39,24 @@ public class PostController {
     //--------------------------TOAN----------------------
 
     //--------------------------TIEN----------------------
+    @RequestMapping(value = "/getAllMedias", method = RequestMethod.GET)
+    public ResponseEntity<List<MediaEntity>> listAllMedias() {
+        List<MediaEntity> mediaEntities= mediaService.findAll();
+        if (mediaEntities.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(mediaEntities, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/getAllPosts", method = RequestMethod.GET)
     public ResponseEntity<List<PostEntity>> listAllPosts() {
         List<PostEntity> postEntities = postService.findAll();
         if (postEntities.isEmpty()) {
-            return new ResponseEntity<List<PostEntity>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<PostEntity>>(postEntities, HttpStatus.OK);
+        return new ResponseEntity<>(postEntities, HttpStatus.OK);
     }
+
 
     @PostMapping(value = "/savePost", consumes = "multipart/form-data")
     @ResponseBody
@@ -89,7 +95,7 @@ public class PostController {
 
                 String mediaName = file[i].getOriginalFilename();
                 String mediaType = file[i].getContentType();
-                String srcMedia = fileUpload + mediaName;
+                String srcMedia = "./assets/ImageServer/" + mediaName;
                 MediaEntity newMedia = new MediaEntity(srcMedia, mediaType, mediaName, user);
                 try {
                     mediaService.save(newMedia);

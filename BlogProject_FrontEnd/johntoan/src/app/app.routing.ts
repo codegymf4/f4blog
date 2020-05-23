@@ -21,7 +21,7 @@ const routes: Routes = [
     { path: 'login',           component: SigninComponent },
     { path: 'landing',          component: LandingComponent},
     { path: 'register',          component: RegisterComponent },
-    { path: 'showblog',          component: ShowblogComponent},
+    { path: 'showblog/:id',          component: ShowblogComponent},
     { path: 'index',          component: IndexUserComponent },
     { path: 'aboutme',          component: AboutmeComponent,canActivate: [AuthGuard]},
     { path: 'createPost',          component: CreatePostComponent }

@@ -54,12 +54,12 @@
                 <br>
                 <br>
                 <div class="row row-cols-1 row-cols-md-2 ">
-                    <div class="col mb-4" *ngFor="let post of listPost">
-                        <div class="card">
-                            <img src="./assets/img/faces/clem-onojeghuo-3.jpg" class="card-img-top" alt="...">
-                            <div class="card-body" [routerLink]="['/showblog']" (click)="addPostToService(post)">
+                    <div class="col mb-4" *ngFor="let post of listPost; let i = index">
+                        <div class="card" style="width: 500px; height: 550px">
+                            <img src="{{mediaList[i].srcMedia}}" class="card-img-top" alt="..." >
+                            <div [routerLink]="['/showblog']" (click)="addPostToService(post)">
                                 <h5 class="card-title">{{post.title}}</h5>
-                                <div class="card-text">
+                                <div>
                                     <div [innerHtml]="post.content" style="height:100px; width: 200px;overflow:hidden"></div>
                                 </div>
 
