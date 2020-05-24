@@ -130,7 +130,7 @@ export class CreatePostComponent implements OnInit {
     // createPost() {
     //     this.post = {
     //         id: 19,
-    //         title: 'toa2nsssssssddsssssssssssssssss',
+    //         title: 'toan,
     //         publishedStatus: true,
     //         publishTime: 1589989875000,
     //         createdAt: 1589989886000,

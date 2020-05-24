@@ -47,7 +47,6 @@ export class EditPostComponent implements OnInit {
   }
 
   private id:number;
-
   ngOnInit(): void {
     this.route.paramMap.subscribe(param => {
       this.id = +param.get('id');
@@ -59,13 +58,11 @@ export class EditPostComponent implements OnInit {
         });
       }
     });
-
     this.postForm = this.formBuilder.group({
       title: new FormControl ('',[Validators.required]),
-      content: new FormControl('',[Validators.required])
+      content: new FormControl('',[Validators.required]),
     });
   }
-
 
   onSelectFile(event){
     this.selectedFiles = event.target.files;
@@ -75,7 +72,6 @@ export class EditPostComponent implements OnInit {
   }
   onSavePost(submitForm: FormGroup) {
     let post = submitForm.value;
-    console.log(post);
     let formData = new FormData();
     formData.append('title', post.title);
     formData.append('content', post.content);
@@ -84,20 +80,19 @@ export class EditPostComponent implements OnInit {
         formData.append('file[]', row);
       }
     }
-
     console.log(formData);
-    this.postService.savePost(formData).subscribe((response) => {
+    this.postService.updateAfterEdit(formData,this.id).subscribe((response) => {
       console.log(response);
     }, (err) => {
       console.log(err, 'error reached');
     });
+    this.router.navigate(['home']);
   }
 
-  saveContentOfPost( { editor }: ChangeEvent ) {
+  viewChangeOfPost( { editor }: ChangeEvent ) {
     const data = editor.getData();
     this.postForm.controls.content.value= data;
     console.log( this.postForm.controls.content.value);
-
     editor.ui.getEditableElement().parentElement.insertBefore(
         editor.ui.view.toolbar.element,
         editor.ui.getEditableElement()

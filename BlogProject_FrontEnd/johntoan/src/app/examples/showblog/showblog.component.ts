@@ -50,6 +50,7 @@ export class ShowblogComponent implements OnInit {
                 this.postService.fetchAllPostFromAPI().subscribe((resJson) => {
                     this.postService.postList = resJson;
                     this.post = this.postService.getOnePost(this.id);
+                    console.log(this.post);
                 });
             }
         });

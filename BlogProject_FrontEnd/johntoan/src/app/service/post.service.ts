@@ -36,4 +36,13 @@ export class PostService {
   getOnePost(postId:number){
     return this.postList.find(e => e.id === postId);
   }
+
+  updateAfterEdit(formData: FormData, postId:number):Observable<any> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    return this.httpClient.post<any>(this.baseUrl + 'updatePost/'+postId, formData, {
+      headers
+    });
+  }
+
 }

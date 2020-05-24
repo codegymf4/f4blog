@@ -121,6 +121,33 @@ public class PostController {
 
     }
 
+        //------------------- Update
+    @RequestMapping(value = "/updatePost/{id}", method = RequestMethod.POST,consumes = "multipart/form-data")
+    @ResponseBody
+    public ResponseEntity<PostEntity> updatePost(@PathVariable("id") Long postId, @RequestPart("file[]") MultipartFile[] file, @ModelAttribute PostEntity postEntity) {
+        System.out.println("Updating Post " + postId);
+
+        PostEntity currentPostEntity = postService.findById(postId);
+
+        if (currentPostEntity == null) {
+            System.out.println("Post with id " + postId + " not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Date currentDate = new Date();
+        Timestamp currentTime = new Timestamp(currentDate.getTime());
+        postEntity.setUpdatedAt(currentTime);
+
+        currentPostEntity.setId(postEntity.getId());
+        currentPostEntity.setTitle(postEntity.getTitle());
+        currentPostEntity.setPublishedStatus(postEntity.getPublishedStatus());
+        currentPostEntity.setPublishTime(postEntity.getPublishTime());
+        currentPostEntity.setUpdatedAt(postEntity.getUpdatedAt());
+        currentPostEntity.setContent(postEntity.getContent());
+
+        postService.save(currentPostEntity);
+        return new ResponseEntity<>(currentPostEntity, HttpStatus.OK);
+    }
+
     //--------------------------TU----------------------
 
     //--------------------------DUNG----------------------
@@ -158,34 +185,7 @@ public class PostController {
 //        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 //    }
 //
-//    //------------------- Update
-//    @RequestMapping(value = "/posts/{id}", method = RequestMethod.PUT)
-//    public ResponseEntity<PostEntity> updatePost(@PathVariable("id") Long id, @RequestBody PostEntity postEntity) {
-//        System.out.println("Updating Post " + id);
-//
-//        PostEntity currentPostEntity = postService.findById(id);
-//
-//        if (currentPostEntity == null) {
-//            System.out.println("Post with id " + id + " not found");
-//            return new ResponseEntity<PostEntity>(HttpStatus.NOT_FOUND);
-//        }
-//
-//        currentPostEntity.setId(postEntity.getId());
-//        currentPostEntity.setTitle(postEntity.getTitle());
-//        currentPostEntity.setPublishedStatus(postEntity.getPublishedStatus());
-//        currentPostEntity.setPublishTime(postEntity.getPublishTime());
-//        currentPostEntity.setCreatedAt(postEntity.getCreatedAt());
-//        currentPostEntity.setUpdatedAt(postEntity.getUpdatedAt());
-//        currentPostEntity.setContent(postEntity.getContent());
-//        currentPostEntity.setCommentsById(postEntity.getCommentsById());
-//        currentPostEntity.setUserByUserId(postEntity.getUserByUserId());
-//        currentPostEntity.setCategoryEntityList(postEntity.getCategoryEntityList());
-//        currentPostEntity.setTagEntityList(postEntity.getTagEntityList());
-//        currentPostEntity.setPostLikesById(postEntity.getPostLikesById());
-//
-//        postService.save(currentPostEntity);
-//        return new ResponseEntity<PostEntity>(currentPostEntity, HttpStatus.OK);
-//    }
+
 //
 //    //------------------- Delete
 //    @RequestMapping(value = "/posts/{id}", method = RequestMethod.DELETE)
