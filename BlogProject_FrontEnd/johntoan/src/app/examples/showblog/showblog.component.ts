@@ -54,6 +54,7 @@ export class ShowblogComponent implements OnInit {
     private id:number;
     ngOnInit(): void {
         this.route.paramMap.subscribe(param => {
+            //Xu ly refresh page du lieu bi mat
             this.id = +param.get('id');
             this.post = this.postService.getOnePost(this.id);
             if(this.post===undefined){
@@ -64,6 +65,8 @@ export class ShowblogComponent implements OnInit {
                     this.time=this.postService.timeConverter(this.post.createdAt);
                 });
             }
+            //Xu ly hien time sau khi back page
+            this.time=this.postService.timeConverter(this.post.createdAt);
         });
 
         this.commentForm = this.formBuilder.group({
