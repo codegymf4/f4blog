@@ -1,7 +1,9 @@
 package com.codegym.Model;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,9 +14,7 @@ public class PostEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-
-    @Column(name = "title",unique = true)
+    @Column(name = "title", length=1000)
     private String title;
     @Column(name = "publishedStatus")
     private byte publishedStatus = 0;
@@ -24,22 +24,31 @@ public class PostEntity {
     private Timestamp createdAt;
     @Column(name = "updatedAt")
     private Timestamp updatedAt;
-    @Column(name = "content")
+    @Column(name = "content",length = 15000)
     private String content;
     @OneToMany(mappedBy = "postByPostId", fetch = FetchType.EAGER)
     private Set<CommentEntity> commentsById;
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private UserEntity userByUserId;
-    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinTable(name = "post_category",joinColumns = @JoinColumn(name = "postId"),inverseJoinColumns = @JoinColumn(name="categoryId"))
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinTable(name = "post_category", joinColumns = @JoinColumn(name = "postId"), inverseJoinColumns = @JoinColumn(name = "categoryId"))
     private Set<CategoryEntity> categoryEntityList;
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name = "post_tag",joinColumns = @JoinColumn(name = "postId"),inverseJoinColumns = @JoinColumn(name="tagId"))
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "post_tag", joinColumns = @JoinColumn(name = "postId"), inverseJoinColumns = @JoinColumn(name = "tagId"))
     private Set<TagEntity> tagEntityList;
-    @OneToMany(mappedBy = "postByPostId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "postByPostId", fetch = FetchType.EAGER)
     private Set<PostLikeEntity> postLikesById;
-    
+
+    public PostEntity() {
+    }
+
+    public PostEntity(String title, Timestamp createdAt, String content, UserEntity userByUserId) {
+        this.title = title;
+        this.createdAt = createdAt;
+        this.content = content;
+        this.userByUserId = userByUserId;
+    }
 
     public Set<TagEntity> getTagEntityList() {
         return tagEntityList;
@@ -129,6 +138,7 @@ public class PostEntity {
     public void setCategoryEntityList(Set<CategoryEntity> categoryEntityList) {
         this.categoryEntityList = categoryEntityList;
     }
+
     public Set<PostLikeEntity> getPostLikesById() {
         return postLikesById;
     }
