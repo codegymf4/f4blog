@@ -14,7 +14,7 @@
                 <div class="name">
                     <h2 class="title">{{post.title}}<br/></h2>
                     <h5 class="description">By {{post.userByUserId.userName}} Created At {{createdAt}}</h5>
-                    <h5 *ngIf="updatedAt">Updated At {{updatedAt}}</h5>
+                    <h5 *ngIf="post.updatedAt > 1590419944000">Updated At {{updatedAt}}</h5>
                 </div>
                 <div [innerHtml] ="post.content"></div>
             </div>

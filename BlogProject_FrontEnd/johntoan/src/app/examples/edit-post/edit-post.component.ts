@@ -84,6 +84,7 @@ export class EditPostComponent implements OnInit {
     }, (err) => {
       console.log(err, 'error reached');
     });
+    this.postService.getAllPost();
     this.router.navigate(['home']);
   }
 

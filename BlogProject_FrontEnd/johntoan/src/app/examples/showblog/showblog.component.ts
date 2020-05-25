@@ -70,6 +70,7 @@ export class ShowblogComponent implements OnInit {
             //Xu ly hien time sau khi back page
             this.createdAt=this.postService.timeConverter(this.post.createdAt);
             this.updatedAt=this.postService.timeConverter(this.post.updatedAt);
+            console.log(this.post.updatedAt);
         });
 
         this.commentForm = this.formBuilder.group({
@@ -90,6 +91,8 @@ export class ShowblogComponent implements OnInit {
         }, error => {
             console.log("delete not successfully");
         });
+//Cap nhat lai list of post sau khi sua
+        this.postService.getAllPost();
 
         this.router.navigate(['home']);
     }

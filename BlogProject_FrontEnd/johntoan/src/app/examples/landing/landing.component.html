@@ -60,7 +60,7 @@
                         <div class="card contentPage" style="width: 500px; height: 550px" *ngIf="post.publishedStatus ==1" >
 <!--                            <img src="{{mediaList[i].srcMedia}}" class="card-img-top" alt="..." >-->
 
-                            <img [src] = "post.postImage" class="card-img-top" alt="..." >
+                            <img [src] = "post.postImage" class="card-img-top" style="height: 350px" alt="..." >
 
                             <div [routerLink]="['/showblog']">
                                 <h5 class="card-title">{{post.title}}</h5>

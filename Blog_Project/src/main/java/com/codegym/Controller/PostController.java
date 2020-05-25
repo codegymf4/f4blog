@@ -13,11 +13,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -77,9 +71,6 @@ public class PostController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        System.out.println(((UserDetails)(SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getUsername());
-
         Long userId = 1L;
         UserEntity user = userService.findById(userId);
         user.setCommentsById(null);
@@ -108,7 +99,6 @@ public class PostController {
             }catch (Exception e){
                 e.printStackTrace();
             }
-
 //            List<MediaEntity> mediaList = new ArrayList<>();
 //            for (int i = 0; i < file.length; i++) {
 //                String fileUpload = environment.getProperty("file_upload").toString();
@@ -131,6 +121,7 @@ public class PostController {
 //                    ex.printStackTrace();
 //                }
 //            }
+
             if (newPost != null) {
                 return new ResponseEntity<Response>(new Response("Post saved successfully"), HttpStatus.OK);
             } else
@@ -158,16 +149,23 @@ public class PostController {
             System.out.println("Post with id " + postId + " not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        
-        String postImageName = file[0].getOriginalFilename();
-        String srcPostImage = "assets/ImageServer/" + postImageName;
+
+        if(file.length>0) {
+            String postImageName = file[0].getOriginalFilename();
+            String srcPostImage = "assets/ImageServer/" + postImageName;
+            if(srcPostImage!=null) {
+                currentPostEntity.setPostImage(srcPostImage);
+            }else {
+                currentPostEntity.setPostImage(currentPostEntity.getPostImage());
+            }
+        }
         Date currentDate = new Date();
         Timestamp currentTime = new Timestamp(currentDate.getTime());
         postEntity.setUpdatedAt(currentTime);
 
         currentPostEntity.setId(postEntity.getId());
         currentPostEntity.setTitle(postEntity.getTitle());
-        currentPostEntity.setPostImage(srcPostImage);
+
 
         if(currentPostEntity.getPublishedStatus()==1){
         }else {
