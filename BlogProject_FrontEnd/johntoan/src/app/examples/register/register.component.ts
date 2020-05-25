@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../service/user.service";
 import {EmailValidator, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserJwt} from "../model/UserJwt";
-import validate = WebAssembly.validate;
 
 @Component({
   selector: 'app-register',
@@ -52,10 +51,10 @@ export class RegisterComponent implements OnInit {
         this.message = "password required";
         status = false;
         break;
-      case (this.userRegisterForm.get('password').getError('minlength').actualLength<6||this.userRegisterForm.get('password').getError('maxlength').actualLength>15):
-        this.message = "user name has min length is 6 and max length is 15";
-        status = false;
-        break;
+      // case (this.userRegisterForm.get('password').getError('minlength').actualLength<6||this.userRegisterForm.get('password').getError('maxlength').actualLength>15):
+      //   this.message = "user name has min length is 6 and max length is 15";
+      //   status = false;
+      //   break;
       case confirmPassword != this.userRegisterForm.value.password:
         this.message = "please re enter password";
         status = false;

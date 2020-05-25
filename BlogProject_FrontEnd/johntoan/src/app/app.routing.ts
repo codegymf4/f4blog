@@ -17,13 +17,16 @@ import {AuthGuard} from "./examples/guards/auth.guard";
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home',             component: LandingComponent },
-    { path: 'profile/:id',     component: ProfileComponent,canActivate: [AuthGuard]},
+    // { path: 'profile/:id',     component: ProfileComponent,canActivate: [AuthGuard]},
+    { path: 'profile/:id',     component: ProfileComponent},
+    { path: 'profile',     component: ProfileComponent},
     { path: 'login',           component: SigninComponent },
     { path: 'landing',          component: LandingComponent},
     { path: 'register',          component: RegisterComponent },
     { path: 'showblog',          component: ShowblogComponent},
     { path: 'index',          component: IndexUserComponent },
-    { path: 'aboutme',          component: AboutmeComponent,canActivate: [AuthGuard]},
+    // { path: 'aboutme',          component: AboutmeComponent,canActivate: [AuthGuard]},
+    { path: 'aboutme',          component: AboutmeComponent},
     { path: 'createPost',          component: CreatePostComponent }
 ];
 

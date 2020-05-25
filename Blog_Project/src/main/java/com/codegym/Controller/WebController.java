@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -33,9 +34,10 @@ public class WebController {
                 new UsernamePasswordAuthenticationToken(userEntity.getUserName(),userEntity.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println(((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         String token = this.jwtService.generateTokenLogin(userEntity.getUserName());
 
-        System.out.println(authentication.getPrincipal());
+//        System.out.println(authentication.getPrincipal());
         System.out.println(userEntity.getUserName()+".."+userEntity.getPassword());
         UserEntity userEntity1 = this.userService.findByUserName(userEntity.getUserName());
         System.out.println(userEntity.getUserName());

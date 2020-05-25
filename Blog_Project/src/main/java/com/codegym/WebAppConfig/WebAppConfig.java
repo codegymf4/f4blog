@@ -29,6 +29,10 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -168,26 +172,29 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
     @Qualifier(value = "entityManager")
     public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
         return entityManagerFactory.createEntityManager();
-    }//package com.codegym.Service.impl;
-//
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.stereotype.Service;
-//
-//
-//
-//@Service
-//public class JwtService {
-//    private static final String SECRET_KEY = "groupf4";
-//    private static final long EXPIRE_TIME = 86400000000L;
-//    private static final Logger logger = LoggerFactory.getLogger(JwtService.class.getName());
-//
-//    public String generateTokenLogin(Authentication authentication) {
-//        authentication.getPrincipal();
-//    }
-//}
+    }
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver getResolver(){
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+        commonsMultipartResolver.setMaxUploadSizePerFile(5000000);
+        return commonsMultipartResolver;
+    }
 
+    @Bean
+    public CorsFilter corsFilter(){
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedHeader("*");
+        config.addAllowedOrigin("*");
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("DELETE");
+        source.registerCorsConfiguration("/**",config);
+        return new CorsFilter(source);
+    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
