@@ -12,6 +12,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +41,8 @@ public class PostController {
     IMediaService mediaService;
     @Autowired
     Environment environment;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     //--------------------------TOAN----------------------
 
@@ -60,7 +68,7 @@ public class PostController {
     @PostMapping(value = "/savePost", consumes = "multipart/form-data")
     @ResponseBody
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<Response> addPost(@RequestPart("file[]") MultipartFile[] file, @ModelAttribute PostEntity post) {
+    public ResponseEntity<Response> addPost(@RequestPart("file[]") MultipartFile[] file, @ModelAttribute PostEntity post,@RequestBody UserEntity userEntity) {
         try {
             if (file != null) {
                 for(int i = 0; i<file.length;i++)
@@ -69,6 +77,8 @@ public class PostController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+       String userName = ((UserDetails)(SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getUsername();
 
         Long userId = 1L;
         UserEntity user = userService.findById(userId);
