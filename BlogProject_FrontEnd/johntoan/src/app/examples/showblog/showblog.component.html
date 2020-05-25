@@ -1,6 +1,7 @@
 <div class="wrapper">
     <div class="page-header page-header-xs" data-parallax="true"
-         style="background-image: url('./assets/img/fabio-mangione.jpg');">
+         [ngStyle]="{ 'background-image': 'url(' + post.postImage + ')'}">
+        <!--style="background-image: url('./assets/img/fabio-mangione.jpg');">-->
         <div class="filter"></div>
     </div>
     <div class="section profile-content">
@@ -64,6 +65,7 @@
             <div class="row">
                 <div class="col-md-6 ml-auto mr-auto text-center">
                     <button class="btn btn-info btn-round" (click)="editPost(this.post)"> Edit</button>
+                    <button class="btn btn-info btn-round" (click)="deletePost(this.post)"> Delete</button>
                     <button class="btn btn-info btn-round"> Like</button>
                     <button class="btn btn btn-info btn-round"> Share</button>
                 </div>

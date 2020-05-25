@@ -81,7 +81,18 @@ export class ShowblogComponent implements OnInit {
         this.router.navigate(['editPost',post.id]);
     }
 
+    deletePost(post:Post){
+        alert("Do you want to delete this Post?")
+        console.log("postId"+ post.id);
+        this.postService.deletePost(post.id).subscribe(result => {
+            console.log("delete successfully");
+            this.postService.getAllPost();
+        }, error => {
+            console.log("delete not successfully");
+        });
 
+        this.router.navigate(['home']);
+    }
     viewChangeOfContentOfComment({ editor }: ChangeEvent){
 
         const data = editor.getData();

@@ -58,4 +58,8 @@ export class PostService {
     var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
     return time;
   }
+
+  deletePost(postId: number){
+    return this.httpClient.delete(this.baseUrl + 'deletePost/' + postId);
+  }
 }
