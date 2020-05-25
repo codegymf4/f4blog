@@ -21,7 +21,8 @@ export class ShowblogComponent implements OnInit {
 
     postList: Post[]=[];
     commentForm:any = FormGroup;
-    time:any;
+    createdAt:any;
+    updatedAt:any;
     public Editor = DecoupledEditor;
 
     private post: Post = new class implements Post {
@@ -62,17 +63,18 @@ export class ShowblogComponent implements OnInit {
                     this.postService.postList = resJson;
                     this.post = this.postService.getOnePost(this.id);
                     console.log(this.post);
-                    this.time=this.postService.timeConverter(this.post.createdAt);
+                    this.createdAt=this.postService.timeConverter(this.post.createdAt);
+                    this.updatedAt=this.postService.timeConverter(this.post.updatedAt);
                 });
             }
             //Xu ly hien time sau khi back page
-            this.time=this.postService.timeConverter(this.post.createdAt);
+            this.createdAt=this.postService.timeConverter(this.post.createdAt);
+            this.updatedAt=this.postService.timeConverter(this.post.updatedAt);
         });
 
         this.commentForm = this.formBuilder.group({
             content: new FormControl('',[Validators.required])
         });
-
     }
 
     editPost(post:Post){

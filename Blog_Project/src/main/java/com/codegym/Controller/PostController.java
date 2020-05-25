@@ -57,7 +57,6 @@ public class PostController {
         return new ResponseEntity<>(postEntities, HttpStatus.OK);
     }
 
-
     @PostMapping(value = "/savePost", consumes = "multipart/form-data")
     @ResponseBody
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -124,10 +123,16 @@ public class PostController {
     @RequestMapping(value = "/updatePost/{id}", method = RequestMethod.POST,consumes = "multipart/form-data")
     @ResponseBody
     public ResponseEntity<PostEntity> updatePost(@PathVariable("id") Long postId, @RequestPart("file[]") MultipartFile[] file, @ModelAttribute PostEntity postEntity) {
+        try {
+            if (file != null) {
+                for(int i = 0; i<file.length;i++)
+                    System.out.println(file[i].getOriginalFilename());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println("Updating Post " + postId);
-
         PostEntity currentPostEntity = postService.findById(postId);
-
         if (currentPostEntity == null) {
             System.out.println("Post with id " + postId + " not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -138,12 +143,15 @@ public class PostController {
 
         currentPostEntity.setId(postEntity.getId());
         currentPostEntity.setTitle(postEntity.getTitle());
-        currentPostEntity.setPublishedStatus(postEntity.getPublishedStatus());
+        if(currentPostEntity.getPublishedStatus()==1){
+        }else {
+            currentPostEntity.setPublishedStatus(postEntity.getPublishedStatus());
+        }
         currentPostEntity.setPublishTime(postEntity.getPublishTime());
         currentPostEntity.setUpdatedAt(postEntity.getUpdatedAt());
         currentPostEntity.setContent(postEntity.getContent());
-
         postService.save(currentPostEntity);
+
         return new ResponseEntity<>(currentPostEntity, HttpStatus.OK);
     }
 
