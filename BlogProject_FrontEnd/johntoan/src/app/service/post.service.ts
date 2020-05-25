@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Post} from "../examples/model/Post";
 import {MediaService} from "./media.service";
+import {CategoryEntity} from "../examples/model/CategoryEntity";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import {MediaService} from "./media.service";
 export class PostService {
 
   postList: Post[] = [];
+  // categoryList:CategoryEntity[]=[{name:"finance"},{name:"IT"},{name:"banking"},{name:"education"},{name:"sport"}];
   constructor(public httpClient: HttpClient) {
     this.getAllPost();
   }
@@ -40,7 +42,7 @@ export class PostService {
   updateAfterEdit(formData: FormData, postId:number):Observable<any> {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
-    return this.httpClient.post<any>(this.baseUrl + 'updatePost/'+postId, formData, {
+    return this.httpClient.post<any>(this.baseUrl + 'updatePost/'+ postId, formData, {
       headers
     });
   }
