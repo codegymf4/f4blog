@@ -13,14 +13,17 @@ import { IndexUserComponent } from './index-user/index-user.component';
 import { AboutmeComponent } from './aboutme/aboutme.component';
 import {HttpClientModule} from "@angular/common/http";
 import { CreatePostComponent } from './create-post/create-post.component';
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import { EditPostDirective } from './edit-post.directive';
+import { EditPostComponent } from './edit-post/edit-post.component';
 
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,ReactiveFormsModule,
+        FormsModule, ReactiveFormsModule,
         NgbModule,
         RouterModule,
-        HttpClientModule
+        HttpClientModule, CKEditorModule
     ],
     declarations: [
         LandingComponent,
@@ -30,7 +33,9 @@ import { CreatePostComponent } from './create-post/create-post.component';
         ShowblogComponent,
         IndexUserComponent,
         AboutmeComponent,
-        CreatePostComponent
+        CreatePostComponent,
+        EditPostDirective,
+        EditPostComponent
     ]
 })
 export class ExamplesModule { }

@@ -3,6 +3,7 @@ package com.codegym.Model;
 import javax.persistence.*;
 import java.sql.Blob;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class PostEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "title")
+    @Column(name = "title", length=1000)
     private String title;
     @Column(name = "publishedStatus")
     private byte publishedStatus = 0;

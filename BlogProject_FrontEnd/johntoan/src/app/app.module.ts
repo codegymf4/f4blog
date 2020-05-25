@@ -13,6 +13,8 @@ import { DashboardComponent } from './components_user/dashboard/dashboard.compon
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {InterceptorService} from "./service/interceptor.service";
 import {PostService} from "./service/post.service";
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {MediaService} from "./service/media.service";
 
 @NgModule({
     declarations: [
@@ -30,9 +32,10 @@ import {PostService} from "./service/post.service";
         ExamplesModule,
         AppRoutingModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CKEditorModule
     ],
-    providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }, PostService],
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }, PostService,MediaService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
