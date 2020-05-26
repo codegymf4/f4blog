@@ -208,7 +208,15 @@ public class PostController {
     }
 
     //--------------------------TU----------------------
-    @GetMapping(value = "/getpostbyuser")
+    @PostMapping(value = "/api/savepostnochangefile")
+    public ResponseEntity<PostEntity> savePostNoUpdateFile(@RequestBody PostEntity postEntity) {
+        Date currentDate = new Date();
+        Timestamp currentTime = new Timestamp(currentDate.getTime());
+        postEntity.setUpdatedAt(currentTime);
+        this.postService.save(postEntity);
+        return ResponseEntity.ok(postEntity);
+    }
+    @GetMapping(value = "/api/getpostbyuser")
     public ResponseEntity<List<PostEntity>> getPostByUser() {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Long id = this.userService.findByUserName(name).getId();
