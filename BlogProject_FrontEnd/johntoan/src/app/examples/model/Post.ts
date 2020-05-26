@@ -19,4 +19,6 @@ export interface Post {
     tagEntityList?: TagEntity[],
     postLikesById?: PostLikes[],
     mediaList?: Media[];
+    postImage?:string;
+    userId?:number;
 }

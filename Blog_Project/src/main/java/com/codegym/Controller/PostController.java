@@ -13,19 +13,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.rmi.server.UnicastServerRef;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +42,15 @@ public class PostController {
     //--------------------------TOAN----------------------
 
     //--------------------------TIEN----------------------
+    @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
+    public ResponseEntity<List<UserEntity>> listAllUsers() {
+        List<UserEntity> userList= userService.findAll();
+        if (userList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(userList, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/getAllMedias", method = RequestMethod.GET)
     public ResponseEntity<List<MediaEntity>> listAllMedias() {
         List<MediaEntity> mediaEntities= mediaService.findAll();
@@ -68,7 +72,7 @@ public class PostController {
     @PostMapping(value = "/savePost", consumes = "multipart/form-data")
     @ResponseBody
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<Response> addPost(@RequestPart("file[]") MultipartFile[] file, @ModelAttribute PostEntity post,@RequestBody UserEntity userEntity) {
+    public ResponseEntity<Response> addPost(@RequestPart("file[]") MultipartFile[] file, @ModelAttribute PostEntity post, @ModelAttribute("userId") String userId) {
         try {
             if (file != null) {
                 for(int i = 0; i<file.length;i++)
@@ -78,10 +82,8 @@ public class PostController {
             e.printStackTrace();
         }
 
-       String userName = ((UserDetails)(SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getUsername();
-
-        Long userId = 1L;
-        UserEntity user = userService.findById(userId);
+        Long currentUserId = Long.parseLong(userId);
+        UserEntity user = userService.findById(currentUserId);
         user.setCommentsById(null);
         user.setMediaById(null);
         user.setPostsById(null);
@@ -91,36 +93,46 @@ public class PostController {
             Date currentDate = new Date();
             Timestamp currentTime = new Timestamp(currentDate.getTime());
             post.setCreatedAt(currentTime);
-            PostEntity newPost = new PostEntity(post.getTitle(),post.getCreatedAt(),post.getContent(),user);
+
+            String fileUpload = environment.getProperty("file_upload").toString();
+            String postImageName = file[0].getOriginalFilename();
+            String srcPostImage = "assets/ImageServer/" + postImageName;
+            // Luu file len server
+            try {
+                FileCopyUtils.copy(file[0].getBytes(), new File(fileUpload + postImageName));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+            PostEntity newPost = new PostEntity(post.getTitle(),post.getCreatedAt(), post.getContent(),srcPostImage,user);
             try {
                 postService.save(newPost);
             }catch (Exception e){
                 e.printStackTrace();
             }
-
-            List<MediaEntity> mediaList = new ArrayList<>();
-            for (int i = 0; i < file.length; i++) {
-                String fileUpload = environment.getProperty("file_upload").toString();
-
-                String mediaName = file[i].getOriginalFilename();
-                String mediaType = file[i].getContentType();
-                String srcMedia = "./assets/ImageServer/" + mediaName;
-                MediaEntity newMedia = new MediaEntity(srcMedia, mediaType, mediaName, user);
-                try {
-                    mediaService.save(newMedia);
-                    MediaEntity media = mediaService.findById(newMedia.getId());
-                    mediaList.add(media);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                // Luu file len server
-                try {
-                    FileCopyUtils.copy(file[i].getBytes(), new File(fileUpload + mediaName));
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            if (newPost != null && (mediaList.size() == file.length)) {
+//            List<MediaEntity> mediaList = new ArrayList<>();
+//            for (int i = 0; i < file.length; i++) {
+//                String fileUpload = environment.getProperty("file_upload").toString();
+//
+//                String mediaName = file[i].getOriginalFilename();
+//                String mediaType = file[i].getContentType();
+//                String srcMedia = "assets/ImageServer/" + mediaName;
+//                MediaEntity newMedia = new MediaEntity(srcMedia, mediaName,mediaType, user);
+//                try {
+//                    mediaService.save(newMedia);
+//                    MediaEntity media = mediaService.findById(newMedia.getId());
+//                    mediaList.add(media);
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//                // Luu file len server
+//                try {
+//                    FileCopyUtils.copy(file[i].getBytes(), new File(fileUpload + mediaName));
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
+            if (newPost != null) {
                 return new ResponseEntity<Response>(new Response("Post saved successfully"), HttpStatus.OK);
             } else
                 return new ResponseEntity<Response>(new Response("Post not saved"), HttpStatus.BAD_REQUEST);
@@ -147,12 +159,24 @@ public class PostController {
             System.out.println("Post with id " + postId + " not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        if(file.length>0) {
+            String postImageName = file[0].getOriginalFilename();
+            String srcPostImage = "assets/ImageServer/" + postImageName;
+            if(srcPostImage!=null) {
+                currentPostEntity.setPostImage(srcPostImage);
+            }else {
+                currentPostEntity.setPostImage(currentPostEntity.getPostImage());
+            }
+        }
         Date currentDate = new Date();
         Timestamp currentTime = new Timestamp(currentDate.getTime());
         postEntity.setUpdatedAt(currentTime);
 
         currentPostEntity.setId(postEntity.getId());
         currentPostEntity.setTitle(postEntity.getTitle());
+
+
         if(currentPostEntity.getPublishedStatus()==1){
         }else {
             currentPostEntity.setPublishedStatus(postEntity.getPublishedStatus());
@@ -165,8 +189,72 @@ public class PostController {
         return new ResponseEntity<>(currentPostEntity, HttpStatus.OK);
     }
 
+    //    //------------------- Delete
+    @RequestMapping(value = "/deletePost/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<PostEntity> deletePost(@PathVariable("id") Long id) {
+        System.out.println("Fetching & Deleting Post with id " + id);
+
+        PostEntity postEntity = postService.findById(id);
+        if (postEntity == null) {
+            System.out.println("Unable to delete. Post with id " + id + " not found");
+            return new ResponseEntity<PostEntity>(HttpStatus.NOT_FOUND);
+        }
+
+        postService.remove(id);
+        return new ResponseEntity<PostEntity>(HttpStatus.NO_CONTENT);
+    }
+
     //--------------------------TU----------------------
 
     //--------------------------DUNG----------------------
+
+
+    //-------------------Retrieve all
+//    @RequestMapping(value = "/getAllPosts/", method = RequestMethod.GET)
+//    public ResponseEntity<List<PostEntity>> listAllPosts() {
+//        List<PostEntity> postEntities = postService.findAll();
+//        if (postEntities.isEmpty()) {
+//            return new ResponseEntity<List<PostEntity>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+//        }
+//        return new ResponseEntity<List<PostEntity>>(postEntities, HttpStatus.OK);
+//    }
+
+//    //-------------------Retrieve Single
+//    @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<PostEntity> getPost(@PathVariable("id") long id) {
+//        System.out.println("Fetching Post with id " + id);
+//        PostEntity postEntity = postService.findById(id);
+//        if (postEntity == null) {
+//            System.out.println("Post with id " + id + " not found");
+//            return new ResponseEntity<PostEntity>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<PostEntity>(postEntity, HttpStatus.OK);
+//    }
+//
+//    //-------------------Create
+//    @RequestMapping(value = "/posts/", method = RequestMethod.POST)
+//    public ResponseEntity<Void> createPost(@RequestBody PostEntity postEntity, UriComponentsBuilder ucBuilder) {
+//        System.out.println("Creating Post " + postEntity.getTitle());
+//        postService.save(postEntity);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setLocation(ucBuilder.path("/posts/{id}").buildAndExpand(postEntity.getId()).toUri());
+//        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+//    }
+
+//    //------------------- Delete
+//    @RequestMapping(value = "/posts/{id}", method = RequestMethod.DELETE)
+//    public ResponseEntity<PostEntity> deletePost(@PathVariable("id") Long id) {
+//        System.out.println("Fetching & Deleting Post with id " + id);
+//
+//        PostEntity postEntity = postService.findById(id);
+//        if (postEntity == null) {
+//            System.out.println("Unable to delete. Post with id " + id + " not found");
+//            return new ResponseEntity<PostEntity>(HttpStatus.NOT_FOUND);
+//        }
+//
+//        postService.remove(id);
+//        return new ResponseEntity<PostEntity>(HttpStatus.NO_CONTENT);
+//    }
+
 
 }

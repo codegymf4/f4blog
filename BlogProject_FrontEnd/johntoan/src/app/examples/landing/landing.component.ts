@@ -29,7 +29,6 @@ export class LandingComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getAllMedias();
         this.getAllPost();
     }
 
@@ -37,14 +36,15 @@ export class LandingComponent implements OnInit {
         this.postService.fetchAllPostFromAPI().subscribe((resJson) => {
             this.listPost = resJson;
         });
+        // this.getAllMedias();
     }
 
-    getAllMedias(){
-        this.mediaService.fetchAllMediaFromAPI().subscribe((resJson) => {
-            this.mediaList = resJson;
-            console.log(this.mediaList);
-        });
-    }
+    // getAllMedias(){
+    //     this.mediaService.fetchAllMediaFromAPI().subscribe((resJson) => {
+    //         this.mediaList = resJson;
+    //         console.log(this.mediaList);
+    //     });
+    // }
 
     logout() {
         this.userService.logout();
