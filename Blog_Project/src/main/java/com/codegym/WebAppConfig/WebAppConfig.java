@@ -2,12 +2,16 @@ package com.codegym.WebAppConfig;
 
 import com.codegym.Repository.IMediaRepository;
 import com.codegym.Repository.IUserRepoHQL;
+import com.codegym.Repository.PostRepository;
 import com.codegym.Repository.impl.MediaRepositoryImpl;
+import com.codegym.Repository.impl.PostRepositoryImpl;
 import com.codegym.Repository.impl.UserRepo;
 import com.codegym.Service.IMediaService;
+import com.codegym.Service.IUserService;
 import com.codegym.Service.PostService;
 import com.codegym.Service.impl.MediaService;
 import com.codegym.Service.impl.PostServiceImpl;
+import com.codegym.Service.impl.UserService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -202,6 +206,26 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
         source.registerCorsConfiguration("/**",config);
         return new CorsFilter(source);
     }
+    //package com.codegym.Service.impl;
+//
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.stereotype.Service;
+//
+//
+//
+//@Service
+//public class JwtService {
+//    private static final String SECRET_KEY = "groupf4";
+//    private static final long EXPIRE_TIME = 86400000000L;
+//    private static final Logger logger = LoggerFactory.getLogger(JwtService.class.getName());
+//
+//    public String generateTokenLogin(Authentication authentication) {
+//        authentication.getPrincipal();
+//    }
+//}
+
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
