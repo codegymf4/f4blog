@@ -123,4 +123,8 @@ export class UserService {
   getOneUser(userName: string, userList: UserPost[]):UserPost{
     return userList.find(e => (e.userName === userName));
   }
+
+  getUserWroteCurrentPost(postId:number){
+    return this.httpClient.get<UserPost>(this.baseUrl + 'getUserWroteCurrentPost/'+postId);
+  }
 }

@@ -7,6 +7,7 @@ import com.codegym.Model.UserEntity;
 import com.codegym.Service.IMediaService;
 import com.codegym.Service.IUserService;
 import com.codegym.Service.PostService;
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -222,6 +223,17 @@ public class PostController {
        if (postEntity.getUserByUserId().getUserName() == SecurityContextHolder.getContext().getAuthentication().getName());
 
        return null;
+    }
+
+    @GetMapping(value = "getUserWroteCurrentPost/{id}")
+    public ResponseEntity<UserEntity> getUserWroteCurrentPost(@PathVariable("id") Long postId){
+
+        PostEntity currentPost = this.postService.findById(postId);
+        Long uerIdOfUserWroteCurrentPost = currentPost.getUserByUserId().getId();
+        UserEntity userWroteCurrentPost = this.userService.findById(uerIdOfUserWroteCurrentPost);
+        if(userWroteCurrentPost!=null)
+        return new ResponseEntity<>(userWroteCurrentPost,HttpStatus.OK);
+        else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 //    @PostMapping()
     //--------------------------DUNG----------------------
