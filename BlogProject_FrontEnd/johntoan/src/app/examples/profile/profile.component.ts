@@ -6,6 +6,7 @@ import {RoleEntity} from "../model/RoleEntity";
 import {ActivatedRoute, UrlSegment} from "@angular/router";
 import {PostServiceService} from "../service/post-service.service";
 import {Post} from "../model/Post";
+import {PostService} from "../../service/post.service";
 
 @Component({
     selector: 'app-profile',
@@ -32,7 +33,8 @@ export class ProfileComponent implements OnInit {
 
     constructor(private userService: UserService,
                 private activatedRoute: ActivatedRoute,
-                private postServiceService:PostServiceService)
+                private postServiceService:PostServiceService,
+                private postService:PostService)
     {
         this.activatedRoute.params.subscribe((b) => alert(b['id']));
     }

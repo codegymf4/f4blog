@@ -35,7 +35,7 @@ public class WebController {
 
         String token = this.jwtService.generateTokenLogin(userEntity.getUserName());
 
-        System.out.print(userService.findPostByUser(1L).size());
+//        System.out.print(userService.findPostByUser(1L).size());
         System.out.println(userEntity.getUserName()+".."+userEntity.getPassword());
         UserEntity userEntity1 = this.userService.findByUserName(userEntity.getUserName());
 

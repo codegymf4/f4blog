@@ -6,14 +6,12 @@ import {UserService} from "./user.service";
 @Injectable({
   providedIn: 'root'
 })
-export class InterceptorService implements HttpInterceptor{
+export class InterceptorService implements HttpInterceptor {
 
-  constructor(private injector:Injector) { }
+  constructor(private userService: UserService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // const lanaguageInj= this.injector.get(UserService);
-    // let currentUser = this.userService.getCurrentUserValue();
-    // if (currentUser && currentUser.token) {
     let token = localStorage.getItem('token');
     if (token != undefined) {
       req = req.clone({

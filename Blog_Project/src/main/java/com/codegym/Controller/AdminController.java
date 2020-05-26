@@ -47,10 +47,8 @@ public class AdminController {
             return
                     new java.lang.String("Khong tim thay user");
         }
-
         return new String("xoa thanh cong");
     }
-
     @PostMapping(value = "/adduser")
     public ResponseEntity<?> addUser(@RequestBody UserEntity userEntity) {
         if (this.userService.findByUserName(userEntity.getUserName())!=null) {
