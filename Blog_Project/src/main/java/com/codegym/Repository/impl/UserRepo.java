@@ -23,6 +23,7 @@ public class UserRepo implements IUserRepoHQL {
             return null;}
     }
 
+
     public UserEntity findByEmail(String email) {
         TypedQuery<UserEntity> query = em.createQuery("select u from UserEntity u where u.email =: email", UserEntity.class);
         query.setParameter("email", email);
@@ -31,4 +32,5 @@ public class UserRepo implements IUserRepoHQL {
         }catch(NoResultException n) {
             return null;}
     }
+
 }

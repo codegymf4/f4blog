@@ -52,17 +52,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         characterEncodingFilter.setForceEncoding(true);
         http.addFilterBefore(characterEncodingFilter, CsrfFilter.class);
         http.csrf().ignoringAntMatchers("/**");
-        http.authorizeRequests().antMatchers( "/","/api/login").permitAll()
+        http.authorizeRequests().antMatchers( "/","/login").permitAll()
                 .and()
 //                .authorizeRequests().antMatchers(HttpMethod.GET,"/api/*").hasRole("USER")
 //                .and()
-                .authorizeRequests().antMatchers(HttpMethod.POST,"/api/test/finish").hasRole("USER")
+                .authorizeRequests().antMatchers(HttpMethod.POST,"/api/getprofile/**").hasRole("USER")
                 .and()
                 .authorizeRequests().antMatchers(HttpMethod.POST,"/api/test/create","/api/quiz/create").hasRole("ADMIN")
                 .and()
                 .authorizeRequests().antMatchers("/admin**").hasRole("ADMIN")
                 .and()
                 .csrf().disable()
+//                .addFilterAt(new AuthenticatioFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .formLogin()
+//                .loginPage("/login")
+//                .usernameParameter("userName")
+//                .passwordParameter("password")
+//                .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/logoutSuccessful");
         http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement()
@@ -70,4 +76,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.cors();
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.codegym.Service;
 
+import com.codegym.Model.MediaEntity;
 import com.codegym.Model.UserEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -15,5 +16,8 @@ public interface IUserService extends UserDetailsService {
     UserEntity findByUserName(String userName);
 
     UserEntity findByEmail(String email);
+
+    UserEntity findById(Long id);
+
 
 }

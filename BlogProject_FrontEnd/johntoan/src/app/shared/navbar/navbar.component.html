@@ -3,8 +3,7 @@
 
         <div *ngIf="isHome2()" class="navbar-translate">
             <a class="navbar-brand" routerLink="/">Profile</a>
-            <a class="navbar-brand" routerLink="/createPost">Add Blog</a>
-
+            <a class="navbar-brand" [routerLink]="['/createPost']">Add Blog</a>
         </div>
 
         <div *ngIf="!isHome2()" class="navbar-translate">

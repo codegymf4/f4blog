@@ -56,8 +56,12 @@ public class UserService implements IUserService {
     }
 
     @Override
+
     public UserEntity findByEmail(String email) {
-        return this.userRepoHQL.findByEmail(email);
+        return this.userRepoHQL.findByEmail(email);}
+
+    public UserEntity findById(Long id) {
+        return userRepo.findOne(id);
     }
 
     @Override

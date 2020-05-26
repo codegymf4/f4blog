@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = {"/api"})
@@ -33,7 +34,9 @@ public class AdminController {
 
     @GetMapping(value = "/getprofile/{userName}")
     public ResponseEntity<?> getUserByName(@PathVariable String userName) {
-       return ResponseEntity.ok(this.userService.findByUserName(userName));
+       System.out.println(((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+       String name = ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+       return ResponseEntity.ok(this.userService.findByUserName(name));
     }
 
     @DeleteMapping(value = "/deleteuser/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,5 +71,4 @@ public class AdminController {
         return new String("Sua thanh cong");
     }
     //--------------------------DUNG----------------------
-
 }
