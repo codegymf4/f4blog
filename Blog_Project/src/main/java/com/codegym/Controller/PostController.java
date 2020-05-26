@@ -208,6 +208,7 @@ public class PostController {
 
     //--------------------------DUNG----------------------
 
+
     //-------------------Retrieve all
 //    @RequestMapping(value = "/getAllPosts/", method = RequestMethod.GET)
 //    public ResponseEntity<List<PostEntity>> listAllPosts() {
@@ -254,5 +255,6 @@ public class PostController {
 //        postService.remove(id);
 //        return new ResponseEntity<PostEntity>(HttpStatus.NO_CONTENT);
 //    }
+
 
 }
