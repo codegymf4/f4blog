@@ -24,10 +24,9 @@
 
         <div class="moving-clouds" style="background-image: url('assets/img/clouds.png'); "></div>
         <h6 class=" category-absolute ml-auto mr-auto">
-
-            <a [routerLink]="['/login']" class="btn btn-outline-neutral btn-round">Login</a>
-            <a [routerLink]="['/register']" class="btn btn-outline-neutral btn-round">Register</a>
-            <a class="btn btn-outline-neutral btn-round" (click)="logout()">Logout</a>
+            <a *ngIf="currentUser == undefined" [routerLink]="['/login']" class="btn btn-outline-neutral btn-round">Login</a>
+            <a *ngIf="currentUser == undefined" [routerLink]="['/register']" class="btn btn-outline-neutral btn-round">Register</a>
+            <a *ngIf="currentUser != undefined" class="btn btn-outline-neutral btn-round" (click)="logout()">Logout</a>
 
         </h6>
 

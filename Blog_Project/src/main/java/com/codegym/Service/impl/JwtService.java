@@ -24,6 +24,16 @@ public class JwtService {
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
     }
+    public String generateTokenPost(String userName,String id) {
+        final String SECRET_KEY1 = userName;
+        System.out.println(SECRET_KEY1);
+        return Jwts.builder()
+                .setSubject(id)
+//                .setIssuedAt(new Date())
+//                .setExpiration(this.expiryDate)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY1)
+                .compact();
+    }
 
     public boolean validateJwtToken(String token) {
         try {
@@ -47,5 +57,9 @@ public class JwtService {
     public String getUserName(String token) {
         String userName = Jwts.parser().setSigningKey(this.SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
         return userName;
+    }
+    public Long getIdPost(String token,String username) {
+        String id = Jwts.parser().setSigningKey(username).parseClaimsJws(token).getBody().getSubject();
+        return Long.valueOf(id);
     }
 }

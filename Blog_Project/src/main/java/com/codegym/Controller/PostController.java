@@ -7,6 +7,7 @@ import com.codegym.Model.UserEntity;
 import com.codegym.Service.IMediaService;
 import com.codegym.Service.IUserService;
 import com.codegym.Service.PostService;
+import com.codegym.Service.impl.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -224,12 +225,33 @@ public class PostController {
         return ResponseEntity.ok(list);
     }
 
-    @GetMapping(value = "/getprivatepost/{id}")
-    public ResponseEntity<PostEntity> getPostPrivate(@PathVariable("id") Long id) {
-       PostEntity postEntity = this.postService.findById(id);
-       if (postEntity.getUserByUserId().getUserName() == SecurityContextHolder.getContext().getAuthentication().getName());
+    @Autowired
+    JwtService jwtService;
 
-       return null;
+    @PostMapping(value = "/api/createlink/{id}")
+    public ResponseEntity<String> getLink(@RequestBody String username,@PathVariable("id") String id) {
+        return ResponseEntity.ok(this.jwtService.generateTokenPost(username, id));
+    }
+    @PostMapping(value = "/api/getprivatepostbyuser")
+    public ResponseEntity<PostEntity> getPostPrivate(@RequestBody String id) {
+        System.out.println(id);
+        try {
+            Long id1 = Long.valueOf(id);
+            PostEntity postEntity = this.postService.findById(id1);
+            if (postEntity != null) {
+                if (postEntity.getUserByUserId().getUserName().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+                    System.out.println(postEntity.getCreatedAt());
+                    return ResponseEntity.ok(postEntity);
+                }
+                return null;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println(id);
+            Long idPost = this.jwtService.getIdPost(id, SecurityContextHolder.getContext().getAuthentication().getName());
+            return ResponseEntity.ok(this.postService.findById(idPost));
+        }
     }
 //    @PostMapping()
     //--------------------------DUNG----------------------

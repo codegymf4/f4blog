@@ -19,19 +19,20 @@
             </div>
         </div>
         <div style="margin: 20px" name="listpost" class="col-md-8">
+            <div>{{message}}</div>
             <h5>List post:</h5><br>
             <div style="margin-bottom: 25px" name="post" class="shadow row" *ngFor="let post of posts; let i = index">
             <div name="post_img" class="p-0 m-0 nopadding" align="left">
                 <img class="nopadding" width="200px" height="150px" src="{{post.postImage}}">
             </div>
             <div name="post-info" class="col-md-7 nopadding" style="justify-content: start">
-                <h5><span>Title post: {{post.title}}</span></h5>
+                <h5><a (click)="goToPost(post)" ><span>Title post: {{post.title}}</span></a></h5>
                 <h5><span>Category: {{post.categoryEntityList[0]}} </span></h5>
                 <h5><span>Create Date: {{post.createdAt}}</span></h5>
                 <div align="right">
                     <button class="btn btn-info btn-round" *ngIf="post.publishedStatus==1" (click)="changeStatus(post)"> Enable</button>
                     <button class="btn btn-info btn-round" *ngIf="post.publishedStatus==0" (click)="changeStatus(post)"> Disable</button>
-                    <button class="btn btn btn-info btn-round"> Share</button>
+                    <button (click)="createLink(post.id)" class="btn btn btn-info btn-round"> Share</button>
                 </div>
             </div>
             </div>

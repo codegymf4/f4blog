@@ -7,6 +7,7 @@ import {PostService} from "../../service/post.service";
 import {Router} from "@angular/router";
 import {Media} from "../model/Media";
 import {MediaService} from "../../service/media.service";
+import {UserJwt} from "../model/UserJwt";
 
 @Component({
     selector: 'app-landing',
@@ -20,6 +21,7 @@ export class LandingComponent implements OnInit {
     focus: any;
     focus1: any;
     introduce: string[];
+    currentUser: string = "";
 
     constructor(private http: HttpClient,
                 private postService: PostService,
@@ -29,6 +31,7 @@ export class LandingComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.currentUser = localStorage.getItem('currentUserName');
         this.getAllPost();
     }
 

@@ -48,7 +48,9 @@ export class UserService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
     localStorage.removeItem('currentUserName');
-    this.router.navigate(["/"]);
+    this.router.navigate(["/"]).then(() => {
+      window.location.reload();
+    });
   }
 
   getUserInfor() {
@@ -112,8 +114,8 @@ export class UserService {
     }
   }
   private baseUrl: string = 'http://localhost:8080/';
-  getCurrentUserValue(): UserJwt {
-    return this.user.value
+  getCurrentUserValue() {
+    return this.user;
   }
   fetchAllUserFromAPI(){
     return this.httpClient.get<UserPost[]>(this.baseUrl +'getAllUsers');

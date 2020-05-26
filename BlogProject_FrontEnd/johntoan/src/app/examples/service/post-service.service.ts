@@ -15,6 +15,8 @@ import {Router} from "@angular/router";
 })
 export class PostServiceService {
     urlGetPostByUser: string = "http://localhost:8080/api/getpostbyuser";
+    urlCreateLink: string = "http://localhost:8080/api/createlink/";
+    urlGetPrivatePostByUser: string = "http://localhost:8080/api/getprivatepostbyuser";
     urlSavePostWithNoChangeFile: string = "http://localhost:8080/api/savepostnochangefile";
     posts: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
     post: BehaviorSubject<Post> = new BehaviorSubject<Post>(new class implements Post {
@@ -50,12 +52,20 @@ export class PostServiceService {
         this.router.navigate(["/profile"]);
     }
 
+    createLink(id: number, name: string) {
+        return this.httpClient.post(this.urlCreateLink + id, name);
+    }
+
     getPost() {
         return this.post;
     }
 
-    setPost(post2: Post) {
-        this.post.next(post2);
+    setPost(postId: string) {
+        this.httpClient.post(this.urlGetPrivatePostByUser,postId).subscribe((u:Post) => {
+            console.log(u);
+            this.post.next(u);
+
+        },error => console.log(error));
     }
 
     getAllPostByUser() {

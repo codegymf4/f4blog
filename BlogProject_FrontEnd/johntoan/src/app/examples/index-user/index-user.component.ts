@@ -37,7 +37,7 @@ export class IndexUserComponent implements OnInit {
     }
 
     addPostToService(post: Post) {
-        this.postService.setPost(post);
+        // this.postService.setPost(post);
     }
 
     deletePost(post: Post) {
