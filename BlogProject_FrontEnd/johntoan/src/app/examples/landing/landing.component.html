@@ -1,3 +1,6 @@
+
+
+
 <div class="wrapper">
     <div class="page-header section-dark" style="background-image: url('assets/img/antoine-barres.jpg')">
         <div class="filter"></div>
@@ -54,8 +57,13 @@
                 <br>
                 <div class="row row-cols-1 row-cols-md-2 ">
                     <div class="col mb-4" *ngFor="let post of listPost; let i = index">
-                        <div class="card" style="width: 500px; height: 550px" *ngIf="post.publishedStatus==1">
-                            <img src="{{mediaList[i].srcMedia}}" class="card-img-top" alt="..." >
+
+                        <div class="card contentPage" style="width: 500px; height: 550px" *ngIf="post.publishedStatus ==1" >
+<!--                            <img src="{{mediaList[i].srcMedia}}" class="card-img-top" alt="..." >-->
+
+                            <img [src] = "post.postImage" class="card-img-top" style="height: 350px" alt="..." >
+
+
                             <div [routerLink]="['/showblog']">
                                 <h5 class="card-title">{{post.title}}</h5>
                                 <div>
@@ -65,13 +73,13 @@
                             <button class="btn btn-info btn-round" (click)="addPostToService(post)" style="position: relative; top: 20px"> View More</button>
                         </div>
                     </div>
-
                     <br>
                     <br>
                     <hr color="zed">
                     <br>
                     <br>
-
+                    <ul id="pagination"></ul>
+                    <br>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="info">
@@ -307,3 +315,6 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+

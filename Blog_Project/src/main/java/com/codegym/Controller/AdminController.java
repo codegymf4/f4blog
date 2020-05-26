@@ -34,7 +34,7 @@ public class AdminController {
 
     @GetMapping(value = "/getprofile/{userName}")
     public ResponseEntity<?> getUserByName(@PathVariable String userName) {
-       System.out.println(((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+       System.out.println(SecurityContextHolder.getContext().getAuthentication().getName()+"123");
        String name = ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
        return ResponseEntity.ok(this.userService.findByUserName(name));
     }

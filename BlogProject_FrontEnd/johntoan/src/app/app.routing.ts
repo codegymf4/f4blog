@@ -20,14 +20,14 @@ const routes: Routes = [
     { path: 'home',             component: LandingComponent },
     // { path: 'profile/:id',     component: ProfileComponent,canActivate: [AuthGuard]},
     { path: 'profile/:id',     component: ProfileComponent},
-    { path: 'profile',     component: ProfileComponent},
+    { path: 'profile',     component: ProfileComponent,canActivate: [AuthGuard]},
     { path: 'login',           component: SigninComponent },
     { path: 'landing',          component: LandingComponent},
     { path: 'register',          component: RegisterComponent },
     { path: 'showblog/:id',          component: ShowblogComponent},
     { path: 'index',          component: IndexUserComponent },
     { path: 'aboutme',          component: AboutmeComponent,canActivate: [AuthGuard]},
-    { path: 'createPost',          component: CreatePostComponent },
+    { path: 'createPost',          component: CreatePostComponent,canActivate: [AuthGuard] },
     { path: 'editPost/:id',          component: EditPostComponent }
 
 ];

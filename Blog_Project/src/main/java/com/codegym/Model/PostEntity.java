@@ -40,14 +40,18 @@ public class PostEntity {
     @OneToMany(mappedBy = "postByPostId", fetch = FetchType.EAGER)
     private Set<PostLikeEntity> postLikesById;
 
+    @Column(name = "postImage")
+    private String postImage;
+
     public PostEntity() {
     }
 
-    public PostEntity(String title, Timestamp createdAt, String content, UserEntity userByUserId) {
+    public PostEntity(String title, Timestamp createdAt, String content, String postImage, UserEntity userByUserId) {
         this.title = title;
         this.createdAt = createdAt;
         this.content = content;
         this.userByUserId = userByUserId;
+        this.postImage = postImage;
     }
 
     public Set<TagEntity> getTagEntityList() {
@@ -145,5 +149,13 @@ public class PostEntity {
 
     public void setPostLikesById(Set<PostLikeEntity> postLikesById) {
         this.postLikesById = postLikesById;
+    }
+
+    public String getPostImage() {
+        return postImage;
+    }
+
+    public void setPostImage(String postImage) {
+        this.postImage = postImage;
     }
 }

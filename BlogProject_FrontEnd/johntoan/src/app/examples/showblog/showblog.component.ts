@@ -70,6 +70,7 @@ export class ShowblogComponent implements OnInit {
             //Xu ly hien time sau khi back page
             this.createdAt=this.postService.timeConverter(this.post.createdAt);
             this.updatedAt=this.postService.timeConverter(this.post.updatedAt);
+            console.log(this.post.updatedAt);
         });
 
         this.commentForm = this.formBuilder.group({
@@ -81,7 +82,20 @@ export class ShowblogComponent implements OnInit {
         this.router.navigate(['editPost',post.id]);
     }
 
+    deletePost(post:Post){
+        alert("Do you want to delete this Post?")
+        console.log("postId"+ post.id);
+        this.postService.deletePost(post.id).subscribe(result => {
+            console.log("delete successfully");
+            this.postService.getAllPost();
+        }, error => {
+            console.log("delete not successfully");
+        });
+//Cap nhat lai list of post sau khi sua
+        this.postService.getAllPost();
 
+        this.router.navigate(['home']);
+    }
     viewChangeOfContentOfComment({ editor }: ChangeEvent){
 
         const data = editor.getData();

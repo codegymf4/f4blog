@@ -14,6 +14,9 @@ export class UserService {
   urlGetProfile: string = "http://localhost:8080/api/getprofile/";
   urlLogin: string = "http://localhost:8080/login";
   urlRegister: string = "http://localhost:8080/api/adduser";
+
+  userList:UserPost[]=[];
+
   private users: BehaviorSubject<UserJwt[]> = new BehaviorSubject([]);
   private user: BehaviorSubject<UserJwt> = new BehaviorSubject<UserJwt>(new class implements UserJwt {
     id: string;
@@ -37,19 +40,18 @@ export class UserService {
     userName: string;
   });
   private message: BehaviorSubject<string> = new BehaviorSubject<string>("");
-
   constructor(private httpClient: HttpClient,private router: Router) {
-
+    this.getAllUser();
   }
 
   logout() {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('currentUserName');
+    this.router.navigate(["/"]);
   }
 
   getUserInfor() {
    var userName: string = localStorage.getItem('currentUserName');
-    alert(userName);
     this.httpClient.get(this.urlGetProfile+userName).subscribe(u => this.userProfile.next(u))
   }
 
@@ -98,8 +100,27 @@ export class UserService {
         }));
   }
 
-
+  createUserCatch(s: string): string {
+    if (s=="403"){
+      return "wrong password or username";}
+    if (s=="404"){
+      return "dont have this acction link";}else {
+      return "down serve backend";
+    }
+  }
+  private baseUrl: string = 'http://localhost:8080/';
   getCurrentUserValue(): UserJwt {
     return this.user.value
+  }
+  fetchAllUserFromAPI(){
+    return this.httpClient.get<UserPost[]>(this.baseUrl +'getAllUsers');
+  }
+  getAllUser(){
+    this.fetchAllUserFromAPI().subscribe((resJson) => {
+      this.userList = resJson;
+    });
+  }
+  getOneUser(userName: string, userList: UserPost[]):UserPost{
+    return userList.find(e => (e.userName === userName));
   }
 }
