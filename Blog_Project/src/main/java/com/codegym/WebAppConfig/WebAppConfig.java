@@ -168,7 +168,10 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
 //        dataSource.setUrl("Jdbc:mysql://52.187.177.166:3306/project1?useSSL=false&serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8");
 //        dataSource.setUsername("root");
 //        dataSource.setPassword("Maiyeuem89");
-
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/project1");
+        dataSource.setUsername("root");
+        dataSource.setPassword("123456");
         return dataSource;
     }
 
@@ -183,7 +186,6 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
         commonsMultipartResolver.setMaxUploadSizePerFile(5000000);
         return commonsMultipartResolver;
     }
-
 
     @Bean
     public CorsFilter corsFilter(){
