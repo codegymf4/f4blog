@@ -25,13 +25,17 @@ export class ProfileComponent implements OnInit {
         srcAvatar: string;
         userName: string;
     };
+    registeredAt: string = "";
 
     constructor(private userService: UserService,private activatedRoute: ActivatedRoute) {
         this.activatedRoute.params.subscribe((b) => console.log(b['id']));
     }
 
     ngOnInit() {this.userService.getUserInfor();
-        this.userService.userProfile.subscribe(b => this.userProfile = b);
+        this.userService.userProfile.subscribe(b => {
+            this.userProfile = b;
+            this.registeredAt = new Date(this.userProfile.registeredAt).toString();
+        });
     }
 
 }
