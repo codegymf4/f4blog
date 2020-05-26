@@ -33,7 +33,6 @@ public class WebController {
                 new UsernamePasswordAuthenticationToken(userEntity.getUserName(),userEntity.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println(((UserDetails)(SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getUsername());
         String token = this.jwtService.generateTokenLogin(userEntity.getUserName());
 
         System.out.println(authentication.getPrincipal());

@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.rmi.server.UnicastServerRef;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +42,15 @@ public class PostController {
     //--------------------------TOAN----------------------
 
     //--------------------------TIEN----------------------
+    @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
+    public ResponseEntity<List<UserEntity>> listAllUsers() {
+        List<UserEntity> userList= userService.findAll();
+        if (userList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(userList, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/getAllMedias", method = RequestMethod.GET)
     public ResponseEntity<List<MediaEntity>> listAllMedias() {
         List<MediaEntity> mediaEntities= mediaService.findAll();
@@ -62,7 +72,7 @@ public class PostController {
     @PostMapping(value = "/savePost", consumes = "multipart/form-data")
     @ResponseBody
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<Response> addPost(@RequestPart("file[]") MultipartFile[] file, @ModelAttribute PostEntity post) {
+    public ResponseEntity<Response> addPost(@RequestPart("file[]") MultipartFile[] file, @ModelAttribute PostEntity post, @ModelAttribute("userId") String userId) {
         try {
             if (file != null) {
                 for(int i = 0; i<file.length;i++)
@@ -71,8 +81,9 @@ public class PostController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Long userId = 1L;
-        UserEntity user = userService.findById(userId);
+
+        Long currentUserId = Long.parseLong(userId);
+        UserEntity user = userService.findById(currentUserId);
         user.setCommentsById(null);
         user.setMediaById(null);
         user.setPostsById(null);
@@ -121,7 +132,6 @@ public class PostController {
 //                    ex.printStackTrace();
 //                }
 //            }
-
             if (newPost != null) {
                 return new ResponseEntity<Response>(new Response("Post saved successfully"), HttpStatus.OK);
             } else

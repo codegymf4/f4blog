@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Post} from "../examples/model/Post";
 import {MediaService} from "./media.service";
 import {CategoryEntity} from "../examples/model/CategoryEntity";
+import {UserPost} from "../examples/model/UserPost";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ export class PostService {
   fetchAllPostFromAPI(){
     return this.httpClient.get<Post[]>(this.baseUrl +'getAllPosts');
   }
+
 
   getAllPost(){
     this.fetchAllPostFromAPI().subscribe((resJson) => {
