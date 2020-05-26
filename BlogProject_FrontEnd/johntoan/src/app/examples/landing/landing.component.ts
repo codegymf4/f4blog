@@ -16,6 +16,7 @@ import {UserJwt} from "../model/UserJwt";
 })
 
 export class LandingComponent implements OnInit {
+    p: number = 1;
     listPost: Post[]=[];
     mediaList:Media[] = [];
     focus: any;

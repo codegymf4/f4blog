@@ -139,7 +139,7 @@ public class UserEntity {
     public void setSrcAvatar(String srcAvatar) {
         this.srcAvatar = srcAvatar;
     }
-    @OneToMany(mappedBy = "userByUserId")
+    @OneToMany(mappedBy = "userByUserId",fetch = FetchType.LAZY)
     @JsonIgnore
     public List<CommentEntity> getCommentsById() {
         return commentsById;

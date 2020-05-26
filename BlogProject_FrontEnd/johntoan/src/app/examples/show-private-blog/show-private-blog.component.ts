@@ -12,6 +12,8 @@ import {HttpClient} from "@angular/common/http";
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ChangeEvent} from "@ckeditor/ckeditor5-angular";
+import {UserService} from "../../service/user.service";
+import {CommentService} from "../../service/comment.service";
 @Component({
   selector: 'app-show-private-blog',
   templateUrl: './show-private-blog.component.html',
@@ -20,6 +22,7 @@ import {ChangeEvent} from "@ckeditor/ckeditor5-angular";
 export class ShowPrivateBlogComponent implements OnInit {
 
   postList: Post[]=[];
+  commentList: CommentPost[]= [];
   commentForm:any = FormGroup;
   createdAt:any="";
   updatedAt:any="";
@@ -42,7 +45,6 @@ export class ShowPrivateBlogComponent implements OnInit {
 
   private comment:CommentPost= new class implements CommentPost {
     content: string;
-    id: number;
   }
 
   constructor(private postService: PostService,
@@ -50,16 +52,23 @@ export class ShowPrivateBlogComponent implements OnInit {
               private route:ActivatedRoute,
               private router: Router,
               private httpClient:HttpClient,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private userService: UserService,
+              private commentService: CommentService) {
   }
 
-  private id:string;
+
+  private id:number;
 
   ngOnInit(): void {
     this.route.params.subscribe((param) => {
       //Xu ly refresh page du lieu bi mat
       this.id = param['id'];
-      this.postServiceService.setPost(this.id);
+      this.commentService.getCommentByPost(this.id).subscribe((c:CommentPost[]) =>{
+        this.commentList = c;
+        console.log(this.commentList[0].userByUserId.userName);
+      },error => console.log(error))
+      this.postServiceService.setPost(this.id.toString());
       this.postServiceService.getPost().subscribe(p => {this.post = p;
         this.createdAt=this.postService.timeConverter(this.post.createdAt);
         this.updatedAt=this.postService.timeConverter(this.post.updatedAt);
@@ -111,8 +120,9 @@ export class ShowPrivateBlogComponent implements OnInit {
         editor.ui.getEditableElement()
     );
   }
-  sendComment(commentForm: FormGroup){
-
+  sendComment(){
+    this.comment.content = (document.getElementById('inputPassword5') as HTMLInputElement).value;
+    this.commentService.sendComment(this.comment, this.id);
   }
 
 

@@ -16,7 +16,11 @@ import { CreatePostComponent } from './create-post/create-post.component';
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import { EditPostDirective } from './edit-post.directive';
 import { EditPostComponent } from './edit-post/edit-post.component';
+
 import { ShowPrivateBlogComponent } from './show-private-blog/show-private-blog.component';
+
+
+import {NgxPaginationModule} from "ngx-pagination";
 
 
 @NgModule({
@@ -25,7 +29,7 @@ import { ShowPrivateBlogComponent } from './show-private-blog/show-private-blog.
         FormsModule, ReactiveFormsModule,
         NgbModule,
         RouterModule,
-        HttpClientModule, CKEditorModule
+        HttpClientModule, CKEditorModule, NgxPaginationModule
     ],
     declarations: [
         LandingComponent,
