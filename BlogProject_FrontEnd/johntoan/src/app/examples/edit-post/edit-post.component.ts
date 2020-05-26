@@ -16,8 +16,8 @@ import {ChangeEvent} from "@ckeditor/ckeditor5-angular";
   templateUrl: './edit-post.component.html',
   styleUrls: ['./edit-post.component.css']
 })
-export class EditPostComponent implements OnInit {
 
+export class EditPostComponent implements OnInit {
   public Editor = DecoupledEditor;
   postForm:any = FormGroup;
   selectedFiles: File[] = [];
@@ -43,6 +43,7 @@ export class EditPostComponent implements OnInit {
               private httpClient:HttpClient,
               private formBuilder:FormBuilder) {
   }
+
   private id:number;
   ngOnInit(): void {
     this.route.paramMap.subscribe(param => {
@@ -60,19 +61,21 @@ export class EditPostComponent implements OnInit {
       content: new FormControl('',[Validators.required]),
     });
   }
+
   onSelectFile(event){
     this.selectedFiles = event.target.files;
-    console.log(this.selectedFiles);
+    // console.log(this.selectedFiles);
     for (let i=0; i<this.selectedFiles.length ; i++){
       this.selectedFiles.push(event.target.files[i]);
     }
   }
+
   onSavePost(submitForm: FormGroup) {
     let post = submitForm.value;
     let formData = new FormData();
     formData.append('title', post.title);
     formData.append('content', post.content);
-    console.log(this.selectedFiles);
+    // console.log(this.selectedFiles);
     if (this.selectedFiles.length > 0) {
       for (let row of this.selectedFiles) {
         formData.append('file[]', row);
@@ -84,6 +87,7 @@ export class EditPostComponent implements OnInit {
     }, (err) => {
       console.log(err, 'error reached');
     });
+    this.postService.getAllPost();
     this.router.navigate(['home']);
   }
 
