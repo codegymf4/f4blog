@@ -14,6 +14,7 @@ export class UserService {
   urlGetProfile: string = "http://localhost:8080/api/getprofile/";
   urlLogin: string = "http://localhost:8080/login";
   urlRegister: string = "http://localhost:8080/api/adduser";
+  urledituser: string = "http://localhost:8080/api/edituser";
 
   userList:UserPost[]=[];
 
@@ -48,7 +49,9 @@ export class UserService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
     localStorage.removeItem('currentUserName');
-    this.router.navigate(["/"]);
+    this.router.navigate(["/"]).then(() => {
+      window.location.reload();
+    });
   }
 
   getUserInfor() {
@@ -102,6 +105,18 @@ export class UserService {
           this.message.next(error.error.text);
         }));
   }
+  editUser(user: UserPost) {
+    this.message.next("");
+
+    this.httpClient.put(this.urledituser, user).subscribe(
+        (result) => {
+          this.login(user.userName, user.password);
+        },((error: HttpErrorResponse) => {
+          console.log(error);
+          console.log(error.error.text)
+          this.message.next(error.error.text);
+        }));
+  }
 
   createUserCatch(s: string): string {
     if (s=="403"){
@@ -112,8 +127,8 @@ export class UserService {
     }
   }
   private baseUrl: string = 'http://localhost:8080/';
-  getCurrentUserValue(): UserJwt {
-    return this.user.value
+  getCurrentUserValue() {
+    return this.user;
   }
   fetchAllUserFromAPI(){
     return this.httpClient.get<UserPost[]>(this.baseUrl +'getAllUsers');

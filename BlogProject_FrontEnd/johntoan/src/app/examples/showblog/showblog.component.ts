@@ -15,6 +15,7 @@ import {ChangeEvent} from "@ckeditor/ckeditor5-angular";
 import {UserService} from "../../service/user.service";
 import {filter, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
+import {CommentService} from "../../service/comment.service";
 @Component({
     selector: 'app-showblog',
     templateUrl: './showblog.component.html',
@@ -23,6 +24,7 @@ import {Subject} from "rxjs";
 export class ShowblogComponent implements OnInit {
 
     postList: Post[]=[];
+    commentList: CommentPost[]= [];
     userName:string;
     commentForm:any = FormGroup;
     createdAt:any;
@@ -47,20 +49,28 @@ export class ShowblogComponent implements OnInit {
 
     private comment:CommentPost= new class implements CommentPost {
         content: string;
-        id: number;
     }
+
     constructor(private postService: PostService,
-                private route:ActivatedRoute,
+                private route: ActivatedRoute,
                 private router: Router,
-                private httpClient:HttpClient,
+                private httpClient: HttpClient,
                 private formBuilder: FormBuilder,
-                private userService:UserService) {
+                private userService: UserService,
+                private commentService: CommentService) {
     }
 
     private id:number;
     ngOnInit(): void {
         //Lay thong tin user dang dang nhap de hien thi hay nut edit va delete khi xem chi tiet bai viet
         this.userName=localStorage.getItem('currentUserName');
+        this.route.params.subscribe(b => {
+            this.id = b['id'];
+            this.commentService.getCommentByPost(this.id).subscribe((c:CommentPost[]) =>{
+                this.commentList = c;
+                console.log(this.commentList[0].userByUserId.userName);
+            },error => console.log(error));
+        });
         this.route.paramMap.subscribe(param => {
             //Xu ly refresh page du lieu bi mat
             this.id = +param.get('id');
@@ -115,7 +125,9 @@ export class ShowblogComponent implements OnInit {
             editor.ui.getEditableElement()
         );
     }
-    sendComment(commentForm: FormGroup){
+    sendComment(){
+        this.comment.content = (document.getElementById('inputPassword5') as HTMLInputElement).value;
+        this.commentService.sendComment(this.comment, this.id);
     }
 
     getUserWroteCurrentPost() {

@@ -16,7 +16,12 @@ import { CreatePostComponent } from './create-post/create-post.component';
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import { EditPostDirective } from './edit-post.directive';
 import { EditPostComponent } from './edit-post/edit-post.component';
+
+import { ShowPrivateBlogComponent } from './show-private-blog/show-private-blog.component';
+
+
 import {NgxPaginationModule} from "ngx-pagination";
+
 
 @NgModule({
     imports: [
@@ -36,7 +41,8 @@ import {NgxPaginationModule} from "ngx-pagination";
         AboutmeComponent,
         CreatePostComponent,
         EditPostDirective,
-        EditPostComponent
+        EditPostComponent,
+        ShowPrivateBlogComponent
     ]
 })
 export class ExamplesModule { }

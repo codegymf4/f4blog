@@ -18,7 +18,7 @@ public class CommentEntity {
     private Timestamp updatedAt;
     @Column(name = "content")
     private String content;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     private UserEntity userByUserId;
     @ManyToOne

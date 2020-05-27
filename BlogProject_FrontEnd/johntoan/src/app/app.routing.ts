@@ -14,17 +14,19 @@ import {AboutmeComponent} from './examples/aboutme/aboutme.component';
 import {CreatePostComponent} from './examples/create-post/create-post.component';
 import {AuthGuard} from "./examples/guards/auth.guard";
 import {EditPostComponent} from "./examples/edit-post/edit-post.component";
+import {ShowPrivateBlogComponent} from "./examples/show-private-blog/show-private-blog.component";
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home',             component: LandingComponent },
     // { path: 'profile/:id',     component: ProfileComponent,canActivate: [AuthGuard]},
-    { path: 'profile/:id',     component: ProfileComponent},
+    { path: 'profile/:id',     component: ProfileComponent,canActivate: [AuthGuard]},
     { path: 'profile',     component: ProfileComponent,canActivate: [AuthGuard]},
     { path: 'login',           component: SigninComponent },
     { path: 'landing',          component: LandingComponent},
     { path: 'register',          component: RegisterComponent },
     { path: 'showblog/:id',          component: ShowblogComponent},
+    { path: 'showprivateblog/:id',          component: ShowPrivateBlogComponent},
     { path: 'index',          component: IndexUserComponent },
     { path: 'aboutme',          component: AboutmeComponent,canActivate: [AuthGuard]},
     { path: 'createPost',          component: CreatePostComponent,canActivate: [AuthGuard] },

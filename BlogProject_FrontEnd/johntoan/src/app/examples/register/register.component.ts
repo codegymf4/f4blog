@@ -60,11 +60,20 @@ export class RegisterComponent implements OnInit {
         status = false;
         break;
     }
-
+    // status = this.checkpass();
     if (status) {
       this.userService.getMessage().subscribe(m => this.message = m);
       let user: UserJwt = this.userRegisterForm.value;
       this.userService.createUser(user);
     }
   }
+
+  // checkpass() {
+  //   if (this.userRegisterForm.get('password').toString().length < 6 || this.userRegisterForm.get('password').toString().length < 6) {
+  //     this.message = this.message = "user name has min length is 6 and max length is 15";
+  //     return false;
+  //   }else {
+  //     return true;
+  //   }
+  // }
 }

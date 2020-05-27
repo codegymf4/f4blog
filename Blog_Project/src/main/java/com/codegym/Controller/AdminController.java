@@ -1,7 +1,11 @@
 package com.codegym.Controller;
 
+import com.codegym.Model.CommentEntity;
+import com.codegym.Model.PostEntity;
 import com.codegym.Model.UserEntity;
+import com.codegym.Service.ICommentService;
 import com.codegym.Service.IUserService;
+import com.codegym.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.MediaType;
@@ -19,9 +23,30 @@ import java.util.List;
 @RequestMapping(value = {"/api"})
 public class AdminController {
     @Autowired
-    IUserService userService;
-    //--------------------------TOAN----------------------
+    PostService postService;
+    @Autowired
+    ICommentService commentService;
 
+    @Autowired
+    IUserService userService;
+
+    //--------------------------TOAN----------------------
+    @PostMapping(value = "/savecomment/{id}")
+    public ResponseEntity<?> saveComment(@PathVariable("id") Long id, @RequestBody CommentEntity commentEntity) {
+        PostEntity post = this.postService.findById(Long.valueOf(id));
+        commentEntity.setPostByPostId(post);
+        UserEntity userEntity = this.userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+        commentEntity.setUserByUserId(userEntity);
+        commentEntity.setCreatedAt(new Timestamp(new Date().getTime()));
+        this.commentService.save(commentEntity);
+        return ResponseEntity.ok(commentEntity);
+    }
+    @GetMapping(value = "/getcommentbypost/{id}")
+    public ResponseEntity<List<CommentEntity>> getCommentByPost(@PathVariable("id")String id) {
+
+//        System.out.println(this.commentService.getCommentByPost(Long.valueOf(id)).get(0).getUserByUserId().getId());
+        return ResponseEntity.ok(this.commentService.getCommentByPost(Long.valueOf(id)));
+    }
     //--------------------------TIEN----------------------
 
     //--------------------------TU----------------------
